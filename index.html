@@ -1,0 +1,880 @@
+<title>Bruno Airosa Cabrera</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&display=swap">
+
+<style>
+:root {
+  /* light: cool paper, biased toward the ink-blue accent */
+  --ground:      #F1F3F6;
+  --surface:     #FFFFFF;
+  --surface-alt: #E9ECF1;
+  --ink:         #141A22;
+  --ink-soft:    #454F5D;
+  --ink-mute:    #6B7686;
+  --rule:        #D8DDE5;
+  --rule-strong: #BFC7D2;
+  --accent:      #1B3A6B;
+  --accent-soft: #E4EAF4;
+  --link:        #24548F;
+  --ok:          #1B6E45;
+  --warn:        #8A5D0B;
+  --crit:        #9C2B2B;
+  --shadow:      0 1px 2px rgba(20,26,34,.05), 0 8px 24px rgba(20,26,34,.06);
+
+  --measure: 66ch;
+  --step-0: 1rem;
+  --step-1: 1.16rem;
+  --step-2: 1.42rem;
+  --step-3: 1.85rem;
+  --step-4: 2.5rem;
+  --step-5: clamp(2.6rem, 6vw, 4rem);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground:      #0E1116;
+    --surface:     #161A21;
+    --surface-alt: #1D222B;
+    --ink:         #E5E9EF;
+    --ink-soft:    #B3BCC9;
+    --ink-mute:    #8B95A4;
+    --rule:        #262C36;
+    --rule-strong: #39414E;
+    --accent:      #8FB2E6;
+    --accent-soft: #1A2334;
+    --link:        #9CC0F0;
+    --ok:          #5DBE8B;
+    --warn:        #D6A54A;
+    --crit:        #E0797A;
+    --shadow:      0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+  }
+}
+
+:root[data-theme="dark"] {
+  --ground:      #0E1116;
+  --surface:     #161A21;
+  --surface-alt: #1D222B;
+  --ink:         #E5E9EF;
+  --ink-soft:    #B3BCC9;
+  --ink-mute:    #8B95A4;
+  --rule:        #262C36;
+  --rule-strong: #39414E;
+  --accent:      #8FB2E6;
+  --accent-soft: #1A2334;
+  --link:        #9CC0F0;
+  --ok:          #5DBE8B;
+  --warn:        #D6A54A;
+  --crit:        #E0797A;
+  --shadow:      0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font-family: "IBM Plex Serif", Georgia, "Times New Roman", serif;
+  font-size: var(--step-0);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, .sans {
+  font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  text-wrap: balance;
+}
+
+code, kbd, pre, .mono {
+  font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+a { color: var(--link); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--link); outline-offset: 3px; border-radius: 2px; }
+
+.wrap { max-width: 68rem; margin: 0 auto; padding: 0 1.5rem; }
+
+/* ---------- masthead ---------- */
+
+.masthead {
+  border-bottom: 1px solid var(--rule);
+  background: var(--surface);
+}
+.masthead-inner {
+  display: flex; flex-wrap: wrap; gap: 1rem 2rem;
+  align-items: baseline; justify-content: space-between;
+  padding-top: 1.1rem; padding-bottom: 1.1rem;
+}
+.wordmark {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 600; font-size: var(--step-1);
+  letter-spacing: -.01em; color: var(--ink);
+  text-decoration: none;
+}
+.masthead nav { display: flex; flex-wrap: wrap; gap: 1.4rem; }
+.masthead nav a {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .8rem; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--ink-mute); text-decoration: none;
+}
+.masthead nav a:hover { color: var(--link); }
+
+/* ---------- hero ---------- */
+
+.hero { padding: clamp(3rem, 8vw, 6rem) 0 clamp(2.5rem, 5vw, 4rem); }
+.hero-grid { display: grid; gap: 2.5rem; grid-template-columns: 1fr; }
+@media (min-width: 62rem) { .hero-grid { grid-template-columns: minmax(0,1.55fr) minmax(0,1fr); gap: 4rem; } }
+
+.eyebrow {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .78rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-mute); margin: 0 0 1.1rem;
+}
+h1 {
+  font-size: var(--step-5); line-height: 1.04; font-weight: 600;
+  letter-spacing: -.025em; margin: 0 0 1.25rem;
+}
+.lede {
+  font-size: var(--step-2); line-height: 1.5; color: var(--ink-soft);
+  max-width: var(--measure); margin: 0 0 1.5rem;
+}
+.lede strong { color: var(--ink); font-weight: 500; }
+
+.hero p.body { max-width: var(--measure); margin: 0 0 1.1rem; }
+
+.contact-row { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.8rem; }
+.chip {
+  display: inline-flex; align-items: center; gap: .45rem;
+  font-family: "IBM Plex Mono", monospace; font-size: .82rem;
+  padding: .42rem .8rem; border: 1px solid var(--rule-strong);
+  border-radius: 2px; background: var(--surface);
+  color: var(--ink-soft); text-decoration: none;
+}
+.chip:hover { border-color: var(--link); color: var(--link); }
+
+/* facts panel */
+.facts {
+  background: var(--surface); border: 1px solid var(--rule);
+  border-radius: 3px; padding: 1.5rem; box-shadow: var(--shadow);
+  align-self: start;
+}
+.facts h2 {
+  font-size: .78rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-mute); margin: 0 0 1.1rem; font-weight: 500;
+  font-family: "IBM Plex Mono", monospace;
+}
+.facts dl { margin: 0; display: grid; gap: .9rem; }
+.facts div { display: grid; gap: .15rem; }
+.facts dt {
+  font-family: "IBM Plex Mono", monospace; font-size: .74rem;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--ink-mute);
+}
+.facts dd { margin: 0; font-size: .95rem; color: var(--ink); }
+
+/* ---------- sections ---------- */
+
+section { padding: clamp(2.5rem, 6vw, 4.5rem) 0; border-top: 1px solid var(--rule); }
+.section-head { margin-bottom: 2.5rem; }
+.section-head h2 {
+  font-size: var(--step-4); font-weight: 600; letter-spacing: -.02em;
+  margin: .5rem 0 .75rem; line-height: 1.1;
+}
+.section-head p { max-width: var(--measure); color: var(--ink-soft); margin: 0; }
+
+/* ---------- project entries ---------- */
+
+.entries { display: grid; gap: 2rem; }
+.entry {
+  background: var(--surface); border: 1px solid var(--rule);
+  border-radius: 3px; overflow: hidden; box-shadow: var(--shadow);
+}
+.entry-body { padding: 1.6rem 1.6rem 1.3rem; }
+@media (min-width: 48rem) { .entry-body { padding: 2rem 2.2rem 1.6rem; } }
+
+.entry-head {
+  display: flex; flex-wrap: wrap; gap: .6rem 1rem;
+  align-items: baseline; justify-content: space-between; margin-bottom: .9rem;
+}
+.entry h3 { font-size: var(--step-3); font-weight: 600; letter-spacing: -.015em; margin: 0; line-height: 1.2; }
+.status {
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-family: "IBM Plex Mono", monospace; font-size: .72rem;
+  letter-spacing: .08em; text-transform: uppercase; white-space: nowrap;
+  padding: .2rem .55rem; border-radius: 2px;
+}
+.status::before { content: ""; width: .45rem; height: .45rem; border-radius: 50%; background: currentColor; }
+.status.live     { color: var(--ok);   background: color-mix(in srgb, var(--ok) 12%, transparent); }
+.status.archived { color: var(--ink-mute); background: var(--surface-alt); }
+.status.building { color: var(--warn); background: color-mix(in srgb, var(--warn) 14%, transparent); }
+
+.entry p { max-width: var(--measure); margin: 0 0 1rem; color: var(--ink-soft); }
+.entry p:last-of-type { margin-bottom: 0; }
+.entry strong { color: var(--ink); font-weight: 500; }
+
+.stack {
+  display: flex; flex-wrap: wrap; gap: .4rem;
+  margin: 1.2rem 0 0; padding: 0; list-style: none;
+}
+.stack li {
+  font-family: "IBM Plex Mono", monospace; font-size: .74rem;
+  color: var(--ink-mute); padding: .18rem .5rem;
+  background: var(--surface-alt); border-radius: 2px;
+}
+
+/* evidence block: the thesis of the whole page */
+.evidence { border-top: 1px solid var(--rule); background: var(--surface-alt); }
+.evidence-label {
+  display: flex; align-items: center; gap: .5rem;
+  font-family: "IBM Plex Mono", monospace; font-size: .7rem;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute);
+  padding: .8rem 1.6rem .4rem;
+}
+@media (min-width: 48rem) { .evidence-label { padding-left: 2.2rem; padding-right: 2.2rem; } }
+.evidence pre {
+  margin: 0; padding: 0 1.6rem 1.3rem; overflow-x: auto;
+  font-size: .8rem; line-height: 1.6; color: var(--ink-soft);
+  tab-size: 2;
+}
+@media (min-width: 48rem) { .evidence pre { padding-left: 2.2rem; padding-right: 2.2rem; } }
+.evidence .hi { color: var(--ink); font-weight: 500; }
+.evidence .cmt { color: var(--ink-mute); }
+
+/* ---------- book ---------- */
+
+.book { display: grid; gap: 2rem; align-items: start; }
+@media (min-width: 52rem) { .book { grid-template-columns: minmax(0,1fr) 15rem; gap: 3rem; } }
+.book-meta {
+  background: var(--surface); border: 1px solid var(--rule);
+  border-radius: 3px; padding: 1.4rem; box-shadow: var(--shadow);
+}
+.book-meta .spine {
+  height: 3px; background: var(--accent); border-radius: 2px; margin-bottom: 1.1rem;
+}
+.book-links { display: flex; flex-wrap: wrap; gap: .5rem; }
+.book-links .chip { font-size: .78rem; padding: .38rem .7rem; }
+
+/* ---------- experience ---------- */
+
+.roles { display: grid; gap: 0; }
+.role {
+  display: grid; gap: .3rem 2rem; padding: 1.35rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+@media (min-width: 46rem) { .role { grid-template-columns: 11rem minmax(0,1fr); } }
+.role:last-child { border-bottom: 0; }
+.role-when {
+  font-family: "IBM Plex Mono", monospace; font-size: .78rem;
+  color: var(--ink-mute); letter-spacing: .02em; padding-top: .2rem;
+  font-variant-numeric: tabular-nums;
+}
+.role h3 { font-size: var(--step-1); font-weight: 600; margin: 0 0 .1rem; letter-spacing: -.01em; }
+.role .org { font-family: "IBM Plex Sans", sans-serif; font-size: .92rem; color: var(--ink-mute); margin: 0 0 .5rem; }
+.role p { margin: 0; max-width: var(--measure); color: var(--ink-soft); font-size: .96rem; }
+
+/* ---------- credentials ---------- */
+
+.cred-grid { display: grid; gap: 1.5rem; }
+@media (min-width: 44rem) { .cred-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+@media (min-width: 68rem) { .cred-grid { grid-template-columns: repeat(3, minmax(0,1fr)); } }
+.cred {
+  background: var(--surface); border: 1px solid var(--rule);
+  border-radius: 3px; padding: 1.3rem; box-shadow: var(--shadow);
+}
+.cred h3 {
+  font-size: .76rem; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ink-mute); font-weight: 500; margin: 0 0 .9rem;
+  font-family: "IBM Plex Mono", monospace;
+}
+.cred ul { margin: 0; padding: 0; list-style: none; display: grid; gap: .5rem; }
+.cred li { font-size: .93rem; color: var(--ink-soft); display: flex; gap: .6rem; }
+.cred li span.tick { color: var(--accent); flex: none; }
+.cred li em { font-style: normal; color: var(--ink-mute); font-size: .85rem; }
+
+/* ---------- footer ---------- */
+
+footer { border-top: 1px solid var(--rule); background: var(--surface); }
+.footer-inner {
+  padding: 2.5rem 0; display: flex; flex-wrap: wrap;
+  gap: 1.5rem 2rem; justify-content: space-between; align-items: baseline;
+}
+footer p { margin: 0; color: var(--ink-mute); font-size: .88rem; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+.footer-links a { font-family: "IBM Plex Mono", monospace; font-size: .82rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+</style>
+
+<header class="masthead">
+  <div class="wrap masthead-inner">
+    <a class="wordmark" href="#top">Bruno Airosa Cabrera</a>
+    <nav>
+      <a href="#work">Lab Work</a>
+      <a href="#capabilities">Capabilities</a>
+      <a href="#book">Book</a>
+      <a href="#experience">Background</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <div class="wrap hero">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">Security Operations · Threat Intelligence · Network Defense</p>
+        <h1>I build defensive infrastructure, then try to prove it is lying to me.</h1>
+        <p class="lede">
+          A working ping does not prove a tunnel is encrypted. An open port does not prove
+          a service is healthy. <strong>Most of what I have learned came from the gap between
+          those two things.</strong>
+        </p>
+        <p class="body">
+          I run a segmented production network at home: four VLANs on managed switching, a
+          virtualized firewall with an intrusion detection sensor, a full SIEM pipeline, a
+          honeypot, and encrypted remote access. Everything below is measured from the live
+          system, not estimated.
+        </p>
+        <p class="body">
+          Currently completing a B.S. in Cybersecurity and Information Assurance, Security+
+          certified, and working toward the CCNA. Based in Jacksonville, Florida, and open to
+          relocation.
+        </p>
+        <div class="contact-row">
+          <a class="chip" href="mailto:bruno@brunoacabrera.tech">bruno@brunoacabrera.tech</a>
+          <a class="chip" href="https://linkedin.com/in/brunoacabrera">LinkedIn</a>
+          <a class="chip" href="tel:+14075757674">(407) 575-7674</a>
+        </div>
+      </div>
+
+      <aside class="facts">
+        <h2>At a glance</h2>
+        <dl>
+          <div>
+            <dt>Focus</dt>
+            <dd>SOC monitoring, IDS tuning, log pipeline engineering, incident analysis</dd>
+          </div>
+          <div>
+            <dt>Certified</dt>
+            <dd>CompTIA Security+, ISC2 CC, JNCIA-Junos. CCNA in progress.</dd>
+          </div>
+          <div>
+            <dt>Languages</dt>
+            <dd>English, Portuguese, Spanish, French, ASL</dd>
+          </div>
+          <div>
+            <dt>Community</dt>
+            <dd>DEF CON 34 volunteer staff. DC904 / 2600, PyJax, JaxLUG.</dd>
+          </div>
+          <div>
+            <dt>Published</dt>
+            <dd>Author of <a href="https://www.amazon.com/dp/B0GPLKRCNN"><em>Byteproof Parenting</em></a>, March 2026</dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+  </div>
+
+  <!-- ============ LAB WORK ============ -->
+  <section id="work">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Lab work</p>
+        <h2>Built, broken, and verified</h2>
+        <p>
+          Every project below includes the check that would have caught me if I were wrong.
+          That is the part most portfolios leave out, and it is the part that matters.
+        </p>
+      </div>
+
+      <div class="entries">
+
+        <!-- 1. HOME SECURITY LAB -->
+        <article class="entry">
+          <div class="entry-body">
+            <div class="entry-head">
+              <h3>Segmented Network &amp; SIEM</h3>
+              <span class="status live">Running</span>
+            </div>
+            <p>
+              A four-VLAN network on a Cisco Catalyst, routed by a virtualized pfSense firewall
+              on a Proxmox host. Suricata inspects the workstation segment and writes EVE JSON
+              into Redis; Logstash drains the queue into Elasticsearch under a least-privilege
+              role scoped to its own indices.
+            </p>
+            <p>
+              <strong>Redis sits in the middle for a specific reason.</strong> Elastic publishes
+              no log shipper for FreeBSD, which is what the firewall runs, so the usual agent path
+              is closed. The buffer also absorbs outages: during a heap resize the search cluster
+              was down for twenty seconds and the queue drained afterward with no gap in the data.
+            </p>
+            <p>
+              Segmentation is enforced by default deny between segments, with each exception
+              written deliberately. The honeypot's path to the log cluster, for example, is scoped
+              to one host rather than the whole segment, so adding a machine to that VLAN does not
+              silently grant it a route into the SIEM.
+            </p>
+            <ul class="stack">
+              <li>pfSense</li><li>Suricata 7.0.8</li><li>Elasticsearch</li><li>Logstash</li>
+              <li>Kibana</li><li>Redis</li><li>Proxmox</li><li>Cisco IOS</li><li>802.1Q</li>
+            </ul>
+          </div>
+          <div class="evidence">
+            <p class="evidence-label">Measured, not estimated</p>
+<pre>Suricata events indexed in one day   <span class="hi">23,583</span>
+Alerts raised                        <span class="hi">76</span>
+  of which explained on inspection   <span class="hi">76</span>  <span class="cmt">(72 were my own setup traffic)</span>
+Redis queue depth at steady state    <span class="hi">0</span>
+Documents lost across a cluster restart  <span class="hi">0</span>   <span class="cmt">21,596 -&gt; 21,836</span>
+Cluster health                       <span class="hi">green</span></pre>
+          </div>
+        </article>
+
+        <!-- 2. IDS TUNING -->
+        <article class="entry">
+          <div class="entry-body">
+            <div class="entry-head">
+              <h3>IDS Tuning Without Cargo Cult</h3>
+              <span class="status live">Running</span>
+            </div>
+            <p>
+              The standard advice for a noisy sensor is to disable whole rule categories. Before
+              doing that I checked the actual alert record: 76 alerts against 23,583 events, and
+              every one of them explainable.
+            </p>
+            <p>
+              Seventy-two fired because a browser on the trusted segment visited a dynamic DNS
+              provider while I was configuring my own VPN endpoint. Disabling that category would
+              have removed <strong>6,062 rules, including nine that match specific malware families
+              using that same provider for command and control</strong>, in order to silence traffic
+              I generated once, by hand.
+            </p>
+            <p>
+              Nothing was suppressed. The one signature that genuinely repeated was traced to a
+              game launcher holding a long-lived connection, identified by pivoting from the alert
+              to the TLS metadata for that destination. It was rate limited rather than suppressed,
+              because the same signature also detects real evasion through overlapping TCP segments.
+            </p>
+            <ul class="stack">
+              <li>Suricata</li><li>ET Open</li><li>JA3 fingerprinting</li><li>threshold.config</li><li>EVE JSON</li>
+            </ul>
+          </div>
+          <div class="evidence">
+            <p class="evidence-label">The distinction that matters</p>
+<pre><span class="cmt"># suppress deletes the signal permanently.</span>
+<span class="cmt"># a rate limit keeps it and drops only the repetition.</span>
+threshold gen_id 1, sig_id 2210050, type limit, \
+          track by_src, count 1, seconds 3600</pre>
+          </div>
+        </article>
+
+        <!-- 3. PQC VPN -->
+        <article class="entry">
+          <div class="entry-body">
+            <div class="entry-head">
+              <h3>Post-Quantum VPN, Isolated and Audited</h3>
+              <span class="status live">Running</span>
+            </div>
+            <p>
+              A from-scratch VPN built during a DEF CON 33 workshop: a post-quantum handshake over
+              TCP, an AES-256 key derived from it, and traffic carried over UDP through a TUN
+              interface. Written in C++ against OpenSSL.
+            </p>
+            <p>
+              It runs in the isolated lab segment, and the placement is the point.
+              <strong>This is unaudited cryptographic code that parses network packets.</strong>
+              Software like that belongs behind a boundary that already exists and has already been
+              tested, not one written specially for it.
+            </p>
+            <p>
+              Bringing it up took four separate fixes, including a diagnostic that had been checking
+              UDP for a service listening on TCP. The command was correct, it ran cleanly, and its
+              empty answer was worthless. I keep that one on the list because the lesson generalizes:
+              a negative result from the wrong question proves nothing.
+            </p>
+            <ul class="stack">
+              <li>C++</li><li>OpenSSL</li><li>TUN/TAP</li><li>tcpdump</li><li>systemd</li><li>Debian</li>
+            </ul>
+          </div>
+          <div class="evidence">
+            <p class="evidence-label">A working ping is not proof of encryption</p>
+<pre><span class="cmt"># captured on the hypervisor while ICMP flowed through the tunnel</span>
+UDP 112 bytes  <span class="hi">0a8b 49e4</span>  5621 538c 3c1c db4a 727a c912
+UDP 112 bytes  <span class="hi">0a8b 49e4</span>  36ce 24a8 8a6c b94d 3b71 bc9b
+
+<span class="cmt"># the 4-byte ID matches the client log. the ICMP structure is gone.</span>
+<span class="cmt"># two near-identical pings produce completely different ciphertext,</span>
+<span class="cmt"># which rules out ECB and static XOR.</span></pre>
+          </div>
+        </article>
+
+        <!-- 4. AI LOG ENRICHMENT -->
+        <article class="entry">
+          <div class="entry-body">
+            <div class="entry-head">
+              <h3>Automated Log Enrichment Engine</h3>
+              <span class="status live">Running</span>
+            </div>
+            <p>
+              A Python service that ingests firewall logs, enriches each event with external IP
+              reputation from AbuseIPDB, and passes the result through an LLM for behavioral
+              summarization before indexing into Elasticsearch for review in Kibana.
+            </p>
+            <p>
+              The design constraint worth naming: an enrichment layer that hallucinates is worse
+              than no enrichment, because it launders a guess into something that reads like a
+              finding. Reputation data and model output are stored in separate fields so an analyst
+              can always see which claim came from where.
+            </p>
+            <ul class="stack">
+              <li>Python</li><li>Gemini API</li><li>AbuseIPDB</li><li>Elasticsearch</li><li>Kibana</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- 5. REMOTE ACCESS -->
+        <article class="entry">
+          <div class="entry-body">
+            <div class="entry-head">
+              <h3>Encrypted Remote Access</h3>
+              <span class="status live">Running</span>
+            </div>
+            <p>
+              WireGuard on the firewall, split tunnel, with a per-peer keypair and a pre-shared key
+              layered on the handshake. The endpoint is a dynamic DNS hostname because the ISP
+              assigns the public address by DHCP, and a hardcoded address fails silently while you
+              are away from home.
+            </p>
+            <p>
+              <strong>DNS is not a monitoring system,</strong> so a watchdog records the public
+              address on a schedule and logs loudly when it changes. It fails independently of the
+              thing it watches. The DNS client itself was verified by falsifying its cache with a
+              reserved documentation address and confirming it corrected itself, rather than by
+              trusting that a hostname resolving today means the client still works.
+            </p>
+            <ul class="stack">
+              <li>WireGuard</li><li>pfSense</li><li>Dynamic DNS</li><li>cron</li><li>PHP</li>
+            </ul>
+          </div>
+          <div class="evidence">
+            <p class="evidence-label">Verified from a mobile network, not from the couch</p>
+<pre>handshake                        <span class="hi">15:29:02 UTC</span>
+peer endpoint                    <span class="hi">carrier IP</span>, Wi-Fi disabled
+dashboard requests from tunnel   <span class="hi">13</span>
+
+<span class="cmt"># a completed handshake proves the tunnel came up.</span>
+<span class="cmt"># requests arriving from the tunnel address prove the</span>
+<span class="cmt"># service behind it was actually reachable.</span></pre>
+          </div>
+        </article>
+
+        <!-- 6. DNS PRIVACY -->
+        <article class="entry">
+          <div class="entry-body">
+            <div class="entry-head">
+              <h3>Private Recursive DNS</h3>
+              <span class="status live">Running</span>
+            </div>
+            <p>
+              Pi-hole handles blocklists, unbound does the recursion and forwards upstream over TLS
+              with DNSSEC validation. The ISP sees encrypted traffic to one address instead of every
+              domain the house looks up.
+            </p>
+            <p>
+              This does not make DNS private from the resolver, and saying otherwise would be
+              marketing. It moves trust from the ISP to a chosen provider. That was a deliberate
+              trade, not an oversight.
+            </p>
+            <ul class="stack">
+              <li>Pi-hole</li><li>unbound</li><li>DNS-over-TLS</li><li>DNSSEC</li><li>Quad9</li>
+            </ul>
+          </div>
+          <div class="evidence">
+            <p class="evidence-label">DNSSEC confirmed by testing a signature that should fail</p>
+<pre>dig dnssec-failed.org   -&gt;  status: <span class="hi">SERVFAIL</span>   <span class="cmt">correctly rejected</span>
+dig cloudflare.com      -&gt;  status: <span class="hi">NOERROR</span>   flags: qr rd ra <span class="hi">ad</span>
+
+<span class="cmt"># the ad flag is authenticated data. without a deliberately</span>
+<span class="cmt"># broken control, a working lookup proves nothing.</span></pre>
+          </div>
+        </article>
+
+        <!-- 7. HONEYPOT -->
+        <article class="entry">
+          <div class="entry-body">
+            <div class="entry-head">
+              <h3>HTTP Tarpit</h3>
+              <span class="status live">Running</span>
+            </div>
+            <p>
+              A tarpit that answers scanners with an endless generated stream, running in a
+              container with a hard memory cap and a tight systemd sandbox. It presents itself as a
+              conventional web server, because a scanner that fingerprints a honeypot simply moves on.
+            </p>
+            <p>
+              It replaced a full honeypot farm that wanted 16&nbsp;GB of RAM to capture malware
+              behavior I had no use for. On a residential connection the interesting question is
+              who is scanning and for what, not what their post-exploitation tooling does.
+              <strong>Choosing the smaller tool because it matches the threat model is the judgment
+              worth defending.</strong>
+            </p>
+            <ul class="stack">
+              <li>Go</li><li>LXC</li><li>systemd hardening</li><li>Filebeat</li><li>Elasticsearch</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- 8. WIRELESS + TOR -->
+        <article class="entry">
+          <div class="entry-body">
+            <div class="entry-head">
+              <h3>Wireless Auditing &amp; Tor Relay</h3>
+              <span class="status archived">Archived</span>
+            </div>
+            <p>
+              A reinforcement learning agent on a Raspberry Pi Zero W that passively surveys
+              wireless networks and captures handshakes for offline cryptanalysis, used to audit
+              my own environment.
+            </p>
+            <p>
+              Separately, a Tor middle relay on a Raspberry Pi 4B with throughput monitored through
+              Nyx. Middle relays carry traffic between nodes and never touch the open internet, so
+              they contribute capacity without the exposure that comes with running an exit.
+              <strong>Both are currently offline.</strong> The relay is being rebuilt inside the
+              lab's isolated segment.
+            </p>
+            <ul class="stack">
+              <li>Raspberry Pi</li><li>bettercap</li><li>A2C / reinforcement learning</li><li>Tor</li><li>Nyx</li>
+            </ul>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CAPABILITIES ============ -->
+  <section id="capabilities">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Technical ground</p>
+        <h2>What I work with, and what I do with it</h2>
+        <p>
+          Everything listed here appears in the projects above. If it is on this page, I have
+          run it, broken it, or fixed it.
+        </p>
+      </div>
+      <div class="cred-grid">
+
+        <div class="cred">
+          <h3>Detection &amp; monitoring</h3>
+          <ul>
+            <li><span class="tick">&#9679;</span> <span>Suricata rule tuning, thresholds and suppression with documented reasoning</span></li>
+            <li><span class="tick">&#9679;</span> <span>Elasticsearch, Logstash, Kibana, Filebeat</span></li>
+            <li><span class="tick">&#9679;</span> <span>EVE JSON, JA3 fingerprinting, TLS and DNS metadata analysis</span></li>
+            <li><span class="tick">&#9679;</span> <span>Alert triage and pivoting from a signature to the flow behind it</span></li>
+            <li><span class="tick">&#9679;</span> <span>Least-privilege ingest roles and index lifecycle</span></li>
+          </ul>
+        </div>
+
+        <div class="cred">
+          <h3>Network &amp; infrastructure</h3>
+          <ul>
+            <li><span class="tick">&#9679;</span> <span>pfSense firewall policy, NAT, and rule debugging with pfctl</span></li>
+            <li><span class="tick">&#9679;</span> <span>802.1Q VLAN segmentation on Cisco IOS</span></li>
+            <li><span class="tick">&#9679;</span> <span>Proxmox virtualization, LXC and KVM</span></li>
+            <li><span class="tick">&#9679;</span> <span>WireGuard, DNS-over-TLS, DNSSEC, dynamic DNS</span></li>
+            <li><span class="tick">&#9679;</span> <span>Packet capture and analysis with tcpdump and Wireshark</span></li>
+            <li><span class="tick">&#9679;</span> <span>Linux and FreeBSD administration, systemd hardening</span></li>
+          </ul>
+        </div>
+
+        <div class="cred">
+          <h3>Automation &amp; analysis</h3>
+          <ul>
+            <li><span class="tick">&#9679;</span> <span>Python for log enrichment and threat automation</span></li>
+            <li><span class="tick">&#9679;</span> <span>Bash and shell scripting, cron-driven operational checks</span></li>
+            <li><span class="tick">&#9679;</span> <span>API enrichment: IP reputation, LLM-assisted summarization</span></li>
+            <li><span class="tick">&#9679;</span> <span>Docker, Redis, PHP for firewall configuration work</span></li>
+            <li><span class="tick">&#9679;</span> <span>NIST Cybersecurity Framework, vulnerability prioritization</span></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BOOK ============ -->
+  <section id="book">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Published</p>
+        <h2>Byteproof Parenting</h2>
+      </div>
+      <div class="book">
+        <div>
+          <p>
+            A guide for parents on the part of security that no firewall reaches: the human layer.
+            Social engineering, account and access hygiene, and practical home network hardening,
+            written for people who are not going to read a standards document.
+          </p>
+          <p>
+            The technical work on this page and the book come from the same conviction. Most
+            households are not compromised through an unpatched service. They are compromised
+            through a convincing message, a reused password, or a device nobody thought to segment.
+            Controls only help people who understand what they are for.
+          </p>
+          <p>
+            The book has its own home at
+            <a href="https://byteproofparenting.com">byteproofparenting.com</a>, written for parents
+            rather than for engineers.
+          </p>
+        </div>
+        <aside class="book-meta">
+          <div class="spine"></div>
+          <p class="sans" style="margin:0 0 .35rem;font-weight:600;">Byteproof Parenting</p>
+          <p style="margin:0 0 1.1rem;color:var(--ink-mute);font-size:.9rem;">A Guide for Digital Era Parents</p>
+          <p style="margin:0 0 1.2rem;color:var(--ink-mute);font-size:.82rem;" class="mono">Published March 2026</p>
+          <div class="book-links">
+            <a class="chip" href="https://www.amazon.com/dp/B0GPLKRCNN">Read on Kindle</a>
+            <a class="chip" href="https://byteproofparenting.com">byteproofparenting.com</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EXPERIENCE ============ -->
+  <section id="experience">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Professional context</p>
+        <h2>Where this work has been paid work</h2>
+        <p>
+          Two places where the security substance was real. My full employment history, titles
+          and dates included, is on my resume. This page is about the work.
+        </p>
+      </div>
+      <div class="roles">
+
+        <article class="role">
+          <p class="role-when">Sep 2025 &ndash; present</p>
+          <div>
+            <h3>Outview IT Solutions</h3>
+            <p class="org">Managed security service provider</p>
+            <p>
+              I evaluate client security postures and threat models, and advise engineering teams
+              and executives on managed SOC capability, SIEM integration, and incident response
+              readiness. Day to day that means sitting between Tier 2 and 3 engineering and the
+              client, turning vulnerability findings and incident telemetry into mitigation plans
+              people will actually carry out, and scoping control baselines against recognized
+              frameworks.
+            </p>
+            <p>
+              The part that transfers most directly to an operations role is the translation.
+              A finding nobody acts on is indistinguishable from a finding nobody made.
+            </p>
+          </div>
+        </article>
+
+        <article class="role">
+          <p class="role-when">2023 &ndash; 2025</p>
+          <div>
+            <h3>AT&amp;T</h3>
+            <p class="org">Cyber Threat Intelligence lab program, across two field roles</p>
+            <p>
+              Selected for a forty-hour experiential program working directly with
+              <strong>AT&amp;T's Cyber Threat Intelligence unit</strong>, and later placed in the
+              company's internal security hackathon on OSINT and cryptography.
+            </p>
+            <p>
+              The field work underneath it was diagnosing hardware, firmware, and connectivity
+              faults inside customer environments, where the fault is almost never where the
+              customer says it is. That habit is the same one the lab work runs on.
+            </p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CREDENTIALS ============ -->
+  <section id="credentials">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Credentials</p>
+        <h2>Certifications, education, and competition</h2>
+      </div>
+      <div class="cred-grid">
+
+        <div class="cred">
+          <h3>Certifications</h3>
+          <ul>
+            <li><span class="tick">&#10003;</span> <span>CompTIA Security+ <em>active</em></span></li>
+            <li><span class="tick">&#10003;</span> <span>Certified in Cybersecurity (CC) <em>ISC2</em></span></li>
+            <li><span class="tick">&#10003;</span> <span>JNCIA-Junos <em>Juniper</em></span></li>
+            <li><span class="tick">&#10003;</span> <span>Google Cybersecurity &amp; IT Support</span></li>
+            <li><span class="tick">&#9679;</span> <span>Cisco CCNA <em>in progress</em></span></li>
+          </ul>
+        </div>
+
+        <div class="cred">
+          <h3>Education</h3>
+          <ul>
+            <li><span class="tick">&#9679;</span> <span>B.S. Cybersecurity &amp; Information Assurance <em>Western Governors University, expected 2027</em></span></li>
+            <li><span class="tick">&#10003;</span> <span>B.S. Physical Education <em>Centro Universit&aacute;rio Celso Lisboa</em></span></li>
+          </ul>
+        </div>
+
+        <div class="cred">
+          <h3>Competition &amp; community</h3>
+          <ul>
+            <li><span class="tick">&#10003;</span> <span>DEF CON 31 Red Team Village OSINT CTF <em>100 of 120 points</em></span></li>
+            <li><span class="tick">&#10003;</span> <span>AT&amp;T Cybersecurity Office Hackathon <em>OSINT and cryptography</em></span></li>
+            <li><span class="tick">&#10003;</span> <span>DEF CON 34 volunteer staff</span></li>
+            <li><span class="tick">&#10003;</span> <span>BSides Orlando and Jacksonville</span></li>
+            <li><span class="tick">&#10003;</span> <span>DC904 / 2600, PyJax, JaxLUG</span></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Contact</p>
+        <h2>Open to security operations roles</h2>
+        <p>
+          Looking for SOC analyst, detection engineering, or threat intelligence work. Based in
+          Jacksonville, Florida, open to relocation and travel.
+        </p>
+      </div>
+      <div class="contact-row">
+        <a class="chip" href="mailto:bruno@brunoacabrera.tech">bruno@brunoacabrera.tech</a>
+        <a class="chip" href="https://linkedin.com/in/brunoacabrera">linkedin.com/in/brunoacabrera</a>
+        <a class="chip" href="tel:+14075757674">(407) 575-7674</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <p>Bruno Airosa Cabrera &middot; Jacksonville, Florida</p>
+    <div class="footer-links">
+      <a href="#work">Lab Work</a>
+      <a href="#capabilities">Capabilities</a>
+      <a href="#book">Book</a>
+      <a href="#experience">Background</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</footer>
