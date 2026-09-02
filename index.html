@@ -291,6 +291,22 @@ section { padding: clamp(2.5rem, 6vw, 4.5rem) 0; border-top: 1px solid var(--rul
 .cred li span.tick { color: var(--accent); flex: none; }
 .cred li em { font-style: normal; color: var(--ink-mute); font-size: .85rem; }
 
+/* ---------- closing note ---------- */
+
+.closing {
+  margin-top: 2.6rem; padding-top: 1.6rem;
+  border-top: 1px solid var(--rule);
+  max-width: var(--measure);
+}
+.closing blockquote {
+  margin: 0 0 .7rem; font-family: "IBM Plex Sans", sans-serif;
+  font-size: var(--step-2); font-weight: 500; line-height: 1.35;
+  letter-spacing: -.015em; color: var(--ink);
+}
+.closing p {
+  margin: 0; color: var(--ink-mute); font-size: .93rem;
+}
+
 /* ---------- footer ---------- */
 
 footer { border-top: 1px solid var(--rule); background: var(--surface); }
@@ -346,6 +362,7 @@ footer p { margin: 0; color: var(--ink-mute); font-size: .88rem; }
         <div class="contact-row">
           <a class="chip" href="mailto:bruno@brunoacabrera.tech">bruno@brunoacabrera.tech</a>
           <a class="chip" href="https://linkedin.com/in/brunoacabrera">LinkedIn</a>
+          <a class="chip" href="https://github.com/Mentalnuk3">github.com/Mentalnuk3</a>
           <a class="chip" href="tel:+14075757674">(407) 575-7674</a>
         </div>
       </div>
@@ -416,6 +433,13 @@ footer p { margin: 0; color: var(--ink-mute); font-size: .88rem; }
               written deliberately. The honeypot's path to the log cluster, for example, is scoped
               to one host rather than the whole segment, so adding a machine to that VLAN does not
               silently grant it a route into the SIEM.
+            </p>
+            <p>
+              The full build is documented at
+              <a href="https://github.com/Mentalnuk3/homelab-security">github.com/Mentalnuk3/homelab-security</a>,
+              including an
+              <a href="https://github.com/Mentalnuk3/homelab-security/blob/main/docs/08-incidents-and-fixes.md">incident log</a>
+              of every failure and how it was diagnosed.
             </p>
             <ul class="stack">
               <li>pfSense</li><li>Suricata 7.0.8</li><li>Elasticsearch</li><li>Logstash</li>
@@ -859,7 +883,17 @@ dig cloudflare.com      -&gt;  status: <span class="hi">NOERROR</span>   flags: 
       <div class="contact-row">
         <a class="chip" href="mailto:bruno@brunoacabrera.tech">bruno@brunoacabrera.tech</a>
         <a class="chip" href="https://linkedin.com/in/brunoacabrera">linkedin.com/in/brunoacabrera</a>
+        <a class="chip" href="https://github.com/Mentalnuk3">github.com/Mentalnuk3</a>
         <a class="chip" href="tel:+14075757674">(407) 575-7674</a>
+      </div>
+
+      <div class="closing">
+        <blockquote>All human connections should be TCP, not UDP.</blockquote>
+        <p>
+          UDP sends and never looks back. TCP shakes hands, waits for acknowledgement, and
+          retransmits when the other side goes quiet. It is the same reason I would rather write
+          down the four things that broke than the one that worked.
+        </p>
       </div>
     </div>
   </section>
