@@ -406,6 +406,7 @@ footer p { margin: 0; color: var(--ink-mute); font-size: .88rem; }
     <a class="wordmark" href="#top">Bruno Airosa Cabrera</a>
     <nav>
       <a href="#work">Lab Work</a>
+      <a href="#osint">OSINT</a>
       <a href="#capabilities">Capabilities</a>
       <a href="#competition">Competition</a>
       <a href="#book">Book</a>
@@ -428,9 +429,10 @@ footer p { margin: 0; color: var(--ink-mute); font-size: .88rem; }
           those two things.</strong>
         </p>
         <p class="body">
-          I work both sides on purpose. On one, OSINT and social engineering: what an
-          organisation exposes without meaning to, and how a person becomes the way in. On the
-          other, the detection that has to catch it, built and measured rather than described.
+          I work both sides on purpose. On one, OSINT: what an organisation exposes without
+          meaning to, and how the people around a subject publish far more than the subject ever
+          does. On the other, the detection that has to catch it, built and measured rather than
+          described.
         </p>
         <p class="body">
           Neither half is worth much alone. You cannot write a detection for an attack you have
@@ -460,7 +462,7 @@ footer p { margin: 0; color: var(--ink-mute); font-size: .88rem; }
         <dl>
           <div>
             <dt>Focus</dt>
-            <dd>OSINT and social engineering, threat intelligence, detection engineering, incident analysis</dd>
+            <dd>OSINT, threat intelligence, detection engineering, incident analysis</dd>
           </div>
           <div>
             <dt>Certified</dt>
@@ -770,6 +772,86 @@ dig cloudflare.com      -&gt;  status: <span class="hi">NOERROR</span>   flags: 
   </section>
 
   <!-- ============ CAPABILITIES ============ -->
+  <!-- ============ OSINT ============ -->
+  <section id="osint">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">OSINT</p>
+        <h2>Two investigations, and what the method is for</h2>
+        <p>
+          Both were taken on without charge, at the request of families directly affected. I am
+          not going to describe the subjects, the findings, or the outcomes. What transfers is the
+          method, so that is what is here.
+        </p>
+      </div>
+      <div class="roles">
+
+        <article class="role">
+          <p class="role-when">The cases</p>
+          <div>
+            <h3>Requested, not volunteered</h3>
+            <p>
+              One concerned the harassment of a minor. The other concerned a man who took money
+              from a large number of people and then left the country. In both, a family came
+              asking, and in both the work was reconnaissance only: nothing was ever sent to a
+              subject, and no account was ever touched.
+            </p>
+            <p>
+              Everything past that point belongs to the people who asked, so it stays with them.
+            </p>
+          </div>
+        </article>
+
+        <article class="role">
+          <p class="role-when">The method</p>
+          <div>
+            <h3>From a thin seed to a corroborated picture</h3>
+            <p>
+              This work starts from almost nothing: a photograph, a handle, a half remembered
+              name. The job is turning that into something corroborated without ever contacting
+              the subject and without trusting any single source.
+            </p>
+            <p>
+              <strong>Identity resolution</strong> with Sherlock and WhatsMyName to find where a
+              handle repeats, then verified by hand, because a username collision is not a person.
+              <strong>Facial recognition</strong> against public imagery, to connect accounts that
+              share no text identifier at all. <strong>Google dorking</strong> for material that is
+              technically public and not indexed the way people assume.
+              <strong>theHarvester and Osintgram</strong> for account and infrastructure surface.
+            </p>
+            <p>
+              Tools produce candidates. What resolves a case is mapping the circles. The inner
+              circle is family and close friends: small, and usually careful. The outer circle is
+              acquaintances, colleagues and business partners: far larger, and not careful at all.
+              People guard their own privacy and publish their associates' by accident. One
+              outer-circle contact tagging a location or a workplace is worth more than everything
+              the subject ever posted about themselves.
+            </p>
+          </div>
+        </article>
+
+        <article class="role">
+          <p class="role-when">Why it is here</p>
+          <div>
+            <h3>The same work precedes an intrusion</h3>
+            <p>
+              This is reconnaissance, and reconnaissance does not care what comes next. Mapping an
+              organisation's people, their relationships and what they publish without meaning to
+              is the identical exercise whether the next step is an investigation or a pretexting
+              call. It is also why I do not read an attack surface as a list of hosts.
+            </p>
+            <p>
+              I have not run a phishing simulation, and this page will not imply that I have. What
+              I can do is tell you what someone would already know about your staff before they
+              wrote the first message.
+            </p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
   <section id="capabilities">
     <div class="wrap">
       <div class="section-head">
@@ -1065,6 +1147,7 @@ dig cloudflare.com      -&gt;  status: <span class="hi">NOERROR</span>   flags: 
     <p>Bruno Airosa Cabrera &middot; Jacksonville, Florida</p>
     <div class="footer-links">
       <a href="#work">Lab Work</a>
+      <a href="#osint">OSINT</a>
       <a href="#capabilities">Capabilities</a>
       <a href="#competition">Competition</a>
       <a href="#book">Book</a>
