@@ -836,6 +836,45 @@ dig cloudflare.com      -&gt;  status: <span class="hi">NOERROR</span>   flags: 
           </div>
         </article>
 
+        <article class="entry">
+          <div class="entry-body">
+            <div class="entry-head">
+              <h3>Novelo: an OSINT Engine That Refuses to Guess</h3>
+              <span class="status live">Public</span>
+            </div>
+            <p>
+              An open source engine that chains open source intelligence. One lead goes in; it
+              works out which of 35 sources accept that kind of lead, stores every raw response
+              with a SHA-256 hash, pulls new leads out of the response, and starts over. It runs
+              detached, so an investigation survives the connection dropping.
+            </p>
+            <p>
+              The design constraint worth naming: an HTTP 200 carrying
+              <code>{"success": 42, "message": "No match"}</code> is a platform saying it found
+              nothing, and a tool that records that as success launders a failed query into a
+              finding. You close the case believing the person is not there. Novelo declares
+              emptiness per source, reports a private profile as a finding rather than an error,
+              and names every source it skipped and why, so a thin report is never mistaken for
+              an empty world.
+            </p>
+            <p>
+              Discovered leads carry a weight set by how they were obtained, not by what they are.
+              Below a threshold they are recorded on the map and spend no queries. On a real case
+              that took a run from 94 leads stuck in a dead queue to zero, without discarding one
+              of them.
+            </p>
+            <p>
+              Source and installer at
+              <a href="https://github.com/Mentalnuk3/novelo">github.com/Mentalnuk3/novelo</a>,
+              where the source registry carries a note on every entry explaining what broke to
+              make it look that way.
+            </p>
+            <ul class="stack">
+              <li>Python</li><li>SQLite</li><li>Sherlock</li><li>Maigret</li><li>Holehe</li><li>GHunt</li><li>Amass</li><li>MIT</li>
+            </ul>
+          </div>
+        </article>
+
       </div>
     </div>
   </section>
@@ -913,6 +952,11 @@ dig cloudflare.com      -&gt;  status: <span class="hi">NOERROR</span>   flags: 
               I have not run a phishing simulation, and this page will not imply that I have. What
               I can do is tell you what someone would already know about your staff before they
               wrote the first message.
+            </p>
+            <p>
+              Both of those were worked by hand, one query at a time. Novelo came out of doing it
+              that way: the same method as an engine, open sourced, and described under lab work
+              above. Neither case was run through it.
             </p>
           </div>
         </article>
