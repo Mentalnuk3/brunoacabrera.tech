@@ -264,7 +264,68 @@ footer { border-top: 1px solid var(--rule); background: var(--surface); margin-t
 .footer-links { display: flex; flex-wrap: wrap; gap: 1.2rem; }
 .footer-links a { font-family: "IBM Plex Mono", monospace; font-size: .82rem; }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+#gate {
+  position: fixed; inset: 0; z-index: 9999;
+  background: #080E15;
+  display: grid; place-items: center;
+  padding: 1.5rem; overflow-y: auto;
+}
+.gate-box { width: 100%; max-width: 31rem; }
+.gate-mark {
+  font-family: "IBM Plex Mono", monospace; font-size: .75rem;
+  letter-spacing: .22em; color: #2E7FBF; margin: 0 0 1.1rem;
+}
+.gate-title {
+  font-family: "IBM Plex Sans", sans-serif; font-size: clamp(1.8rem, 5vw, 2.3rem);
+  font-weight: 600; letter-spacing: -.025em; color: #E4E9F0; margin: 0 0 2.2rem;
+}
+#gate label {
+  display: block; font-family: "IBM Plex Mono", monospace; font-size: .72rem;
+  letter-spacing: .14em; text-transform: uppercase; color: #63798F; margin-bottom: .5rem;
+}
+#gate input {
+  width: 100%; background: #040A10; border: 1px solid #2A3744; border-radius: 3px;
+  color: #6FD3E4; font-family: "IBM Plex Mono", monospace; font-size: 1rem;
+  padding: .75rem .9rem;
+}
+#gate input:focus { outline: none; border-color: #2E7FBF; }
+#gate button {
+  margin-top: .85rem; font-family: "IBM Plex Mono", monospace; font-size: .82rem;
+  letter-spacing: .12em; text-transform: uppercase; cursor: pointer;
+  background: #2E7FBF; color: #04090E; border: 0; border-radius: 3px; padding: .7rem 1.5rem;
+}
+#gate button:hover { background: #4A9BD8; }
+#gate-msg {
+  font-family: "IBM Plex Mono", monospace; font-size: .8rem;
+  color: #E0797A; min-height: 1.3rem; margin: .9rem 0 0;
+}
+.gate-note { margin-top: 2.4rem; border-top: 1px solid #1C2733; padding-top: 1.5rem; }
+.gate-note p {
+  font-family: "IBM Plex Serif", Georgia, serif; font-size: .94rem;
+  color: #B9CBDB; margin: 0 0 .75rem; line-height: 1.65;
+}
+.gate-note p:last-child { margin-bottom: 0; }
+.gate-note strong { color: #FFFFFF; font-weight: 500; }
 </style>
+
+<div id="gate" role="dialog" aria-modal="true" aria-label="Restricted area">
+  <div class="gate-box">
+    <p class="gate-mark">[ NIGHTSHIFT ]</p>
+    <h1 class="gate-title">Restricted area</h1>
+    <form id="gate-form" autocomplete="off">
+      <label for="gate-pass">passphrase</label>
+      <input id="gate-pass" type="password" autocomplete="off" spellcheck="false" autofocus>
+      <button type="submit">enter</button>
+      <p id="gate-msg" role="status"></p>
+    </form>
+    <div class="gate-note">
+      <p>No, you weren't given the passphrase.</p>
+      <p><strong>Getting in is the exercise.</strong> Anything on your own machine is fair game &mdash; the browser, its menus, anything you can read. There is more than one way through and none of them require guessing the word.</p>
+      <p>Ten minutes on your own. Then ask.</p>
+    </div>
+  </div>
+</div>
 
 <header class="masthead">
   <div class="wrap masthead-inner">
@@ -302,6 +363,34 @@ footer { border-top: 1px solid var(--rule); background: var(--surface); margin-t
       <a href="#resources">Resources</a> says where to learn each piece properly.
     </p>
   </div>
+
+  <section id="gotin">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>How you got in</h2>
+        <p>You're reading this, so the gate didn't hold. Find the paragraph that matches how you did it &mdash; the route you took decides which lesson you just learned.</p>
+      </div>
+      <div class="concepts">
+        <div class="concept">
+          <h3>you read the page without the word</h3>
+          <p>Then it was never protected. A gate written in JavaScript sends your browser the <strong>entire page first</strong> and hides part of it afterwards. The decision about what you're allowed to see was made on your computer &mdash; the one machine in this story that you fully control. View source, developer tools, disabling JavaScript, or a single <code>curl</code> all walk straight past it.</p>
+        </div>
+        <div class="concept">
+          <h3>you tried to crack the hash first</h3>
+          <p>Good instinct, and it got you nowhere &mdash; which is the interesting part. The code holds a SHA-256 rather than the word itself, and this particular passphrase has never appeared in a single breach, so no lookup table on earth contains it. Precomputation, the trick from exercise 3, simply has nothing to work with here. By the standard of exercise 4 it is a genuinely strong secret.</p>
+          <p><strong>And you still got in, in well under a minute.</strong> That's the whole lesson: the password was never the weak part. A strong secret guarding a broken design is still a broken design.</p>
+        </div>
+        <div class="concept">
+          <h3>what would have actually worked</h3>
+          <p>A check that happens on a <strong>server you don't control, before the page is ever sent</strong>. The server simply never hands over what you aren't allowed to see, so there's nothing on your machine to inspect, edit or skip. "Never trust the client" is the whole idea, and it's one of the few rules in this field with almost no exceptions.</p>
+        </div>
+        <div class="concept">
+          <h3>the part the gate can't fix</h3>
+          <p>Even with a perfect login, this page would still be sitting in a <strong>public repository on GitHub</strong>, readable by anyone, with no gate anywhere near it. The address was unlisted, which is not the same thing as protected. That gap has a name &mdash; <em>security through obscurity</em> &mdash; and it's one of the oldest and most expensive mistakes there is.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section id="start">
     <div class="wrap">
@@ -793,6 +882,14 @@ git push</code>
           <h3>threat model</h3>
           <p>Naming who you're defending against before defending anything. "Secure" isn't a property a system has; it's a sentence that needs finishing &mdash; secure <em>against whom</em>, <em>doing what</em>, <em>for how long</em>. Exercise 6 is a threat model with the training wheels on.</p>
         </div>
+        <div class="concept">
+          <h3>security through obscurity</h3>
+          <p>Relying on something being hard to find rather than hard to open. An unlisted URL, a renamed admin page, a hidden folder. It isn't worthless as an extra layer, but it <strong>collapses completely the moment someone looks</strong>, and it tends to be mistaken for the real thing. If your defence stops working once the design is known, it was never a defence.</p>
+        </div>
+        <div class="concept">
+          <h3>trust boundary</h3>
+          <p>The line where data stops being under your control and starts being under someone else's. Everything the user's browser holds &mdash; the page, the JavaScript, the hidden fields, the disabled button &mdash; is on <strong>their</strong> side of that line and can be rewritten at will. Checks worth anything happen on your side. The gate on this page put the line in exactly the wrong place.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -932,6 +1029,54 @@ git push</code>
         localStorage.setItem('ns-' + box.id, box.checked ? '1' : '0');
       } catch (e) {}
     });
+  });
+})();
+</script>
+<script>
+// Deliberately client-side. See the "How you got in" section.
+(function () {
+  var EXPECTED = "20236fdfa3e03d2b6168bb127ec436fdd00f9a51ff5ad2afc58ad1d18b6d2be6";
+  var gate = document.getElementById("gate");
+  if (!gate) return;
+
+  function unlock() {
+    gate.parentNode.removeChild(gate);
+    try { sessionStorage.setItem("ns-gate", "1"); } catch (e) {}
+  }
+
+  try {
+    if (sessionStorage.getItem("ns-gate") === "1") { unlock(); return; }
+  } catch (e) {}
+
+  var form = document.getElementById("gate-form");
+  var field = document.getElementById("gate-pass");
+  var msg = document.getElementById("gate-msg");
+  var tries = 0;
+
+  form.addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    tries++;
+    if (!window.crypto || !crypto.subtle) {
+      msg.textContent = "crypto unavailable here - open the page over https";
+      return;
+    }
+    crypto.subtle
+      .digest("SHA-256", new TextEncoder().encode(field.value))
+      .then(function (buf) {
+        var hex = Array.prototype.map
+          .call(new Uint8Array(buf), function (b) {
+            return ("0" + b.toString(16)).slice(-2);
+          })
+          .join("");
+        if (hex === EXPECTED) {
+          unlock();
+        } else if (tries >= 4) {
+          msg.textContent = "denied. you are attacking the wrong thing.";
+        } else {
+          msg.textContent = "denied.";
+        }
+        field.select();
+      });
   });
 })();
 </script>
