@@ -1,0 +1,938 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Nightshift</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&display=swap">
+
+<style>
+:root {
+  --ground:#EDF1F6; --surface:#FFFFFF; --surface-alt:#E3E9F1;
+  --ink:#121820; --ink-soft:#414B59; --ink-mute:#697585;
+  --rule:#D4DCE6; --rule-strong:#B7C2D0;
+  --accent:#1B5FA8; --accent-deep:#123F73; --accent-soft:#DCE8F7; --link:#1B5FA8;
+  --data:#0B7285; --data-soft:#D6EDF2;
+  --ok:#17754A; --warn:#8A5D0B; --crit:#9C2B2B;
+  --ev-ground:#101E2B; --ev-rail:#2E7FBF; --ev-ink:#B9CBDB;
+  --ev-hi:#6FD3E4; --ev-warm:#E2A75C; --ev-cmt:#63798F;
+  --shadow:0 1px 2px rgba(18,24,32,.05), 0 8px 24px rgba(18,24,32,.07);
+  --btn-ink:#FFFFFF;
+  --measure:66ch;
+  --step-0:1rem; --step-1:1.16rem; --step-2:1.42rem; --step-3:1.85rem;
+  --step-4:2.5rem; --step-5:clamp(2.6rem,6vw,4rem);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground:#0C1017; --surface:#141A22; --surface-alt:#1B222C;
+    --ink:#E4E9F0; --ink-soft:#B2BCC9; --ink-mute:#8794A4;
+    --rule:#242C37; --rule-strong:#37414F;
+    --accent:#6BA6E8; --accent-deep:#A7C8F0; --accent-soft:#16243A; --link:#7FB4EE;
+    --data:#3FB0C4; --data-soft:#102C33;
+    --ok:#4FBE87; --warn:#D6A54A; --crit:#E0797A;
+    --ev-ground:#080E15;
+    --shadow:0 1px 2px rgba(0,0,0,.45), 0 8px 24px rgba(0,0,0,.35);
+    --btn-ink:#0C1017;
+  }
+}
+:root[data-theme="dark"] {
+  --ground:#0C1017; --surface:#141A22; --surface-alt:#1B222C;
+  --ink:#E4E9F0; --ink-soft:#B2BCC9; --ink-mute:#8794A4;
+  --rule:#242C37; --rule-strong:#37414F;
+  --accent:#6BA6E8; --accent-deep:#A7C8F0; --accent-soft:#16243A; --link:#7FB4EE;
+  --data:#3FB0C4; --data-soft:#102C33;
+  --ok:#4FBE87; --warn:#D6A54A; --crit:#E0797A;
+  --ev-ground:#080E15;
+  --shadow:0 1px 2px rgba(0,0,0,.45), 0 8px 24px rgba(0,0,0,.35);
+  --btn-ink:#0C1017;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: "IBM Plex Serif", Georgia, "Times New Roman", serif;
+  font-size: var(--step-0);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, .sans {
+  font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  text-wrap: balance;
+}
+a { color: var(--link); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+code, kbd { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: .88em; }
+.wrap { max-width: 68rem; margin: 0 auto; padding: 0 1.5rem; }
+
+.masthead { border-bottom: 1px solid var(--rule); background: var(--surface); }
+.masthead-inner {
+  display: flex; flex-wrap: wrap; gap: 1rem 2rem;
+  align-items: baseline; justify-content: space-between; padding-block: 1.1rem;
+}
+.wordmark {
+  font-family: "IBM Plex Mono", monospace; font-size: .92rem;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink); text-decoration: none;
+}
+.masthead nav { display: flex; flex-wrap: wrap; gap: 1.4rem; }
+.masthead nav a {
+  font-family: "IBM Plex Sans", sans-serif; font-size: .88rem;
+  color: var(--ink-soft); text-decoration: none;
+}
+.masthead nav a:hover { color: var(--link); }
+
+.hero { padding: clamp(2.6rem,7vw,5rem) 0 clamp(2rem,4vw,3rem); }
+.eyebrow {
+  font-family: "IBM Plex Mono", monospace; font-size: .78rem;
+  letter-spacing: .16em; text-transform: uppercase;
+  color: var(--ink-mute); margin: 0 0 1rem;
+}
+h1 { font-size: var(--step-5); font-weight: 600; letter-spacing: -.03em; line-height: 1.04; margin: 0 0 1.4rem; }
+.lede { font-size: var(--step-2); color: var(--ink-soft); max-width: var(--measure); margin: 0 0 1.1rem; }
+.lede strong { color: var(--ink); font-weight: 500; }
+.hero p.body { max-width: var(--measure); margin: 0 0 1.1rem; color: var(--ink-soft); }
+
+section { padding: clamp(2.2rem,5vw,3.8rem) 0; border-top: 1px solid var(--rule); }
+.section-head { margin-bottom: 2.2rem; }
+.section-head h2 { font-size: var(--step-4); font-weight: 600; letter-spacing: -.025em; margin: 0 0 .7rem; }
+.section-head p { max-width: var(--measure); color: var(--ink-soft); margin: 0; }
+
+.status {
+  font-family: "IBM Plex Mono", monospace; font-size: .72rem;
+  letter-spacing: .1em; text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: .25rem .6rem; border-radius: 2rem; white-space: nowrap;
+}
+.status::before { content: ""; width: .45rem; height: .45rem; border-radius: 50%; background: currentColor; }
+.status.live { color: var(--ok); background: color-mix(in srgb, var(--ok) 12%, transparent); }
+.status.locked { color: var(--ink-mute); background: var(--surface-alt); }
+.status.building { color: var(--warn); background: color-mix(in srgb, var(--warn) 14%, transparent); }
+
+.missions { display: grid; gap: 0; border: 1px solid var(--rule); border-radius: 4px; background: var(--surface); box-shadow: var(--shadow); overflow: hidden; }
+.mission { display: grid; gap: .2rem 1.4rem; padding: 1.3rem 1.5rem; border-bottom: 1px solid var(--rule); }
+@media (min-width: 46rem) { .mission { grid-template-columns: 3.5rem minmax(0,1fr) auto; align-items: start; } }
+.mission:last-child { border-bottom: 0; }
+.mission-no { font-family: "IBM Plex Mono", monospace; font-size: .85rem; color: var(--ink-mute); padding-top: .15rem; }
+.mission h3 { font-size: var(--step-1); font-weight: 600; margin: 0 0 .25rem; letter-spacing: -.01em; }
+.mission p { margin: 0; color: var(--ink-soft); font-size: .95rem; max-width: var(--measure); }
+.mission .teaches { font-family: "IBM Plex Mono", monospace; font-size: .78rem; color: var(--ink-mute); margin-top: .7rem; }
+.brief { margin: .55rem 0 0; display: grid; gap: .4rem; }
+.brief > div { display: grid; gap: .1rem .9rem; }
+@media (min-width: 38rem) { .brief > div { grid-template-columns: 4.1rem minmax(0,1fr); } }
+.brief dt {
+  font-family: "IBM Plex Mono", monospace; font-size: .71rem;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ink-mute); padding-top: .3rem;
+}
+.brief dd { margin: 0; font-size: .95rem; color: var(--ink-soft); max-width: var(--measure); }
+.brief dd strong { color: var(--ink); font-weight: 500; }
+
+.tasks { list-style: none; margin: 0; padding: 0; display: grid; gap: .8rem; }
+.task {
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 4px;
+  padding: 1.1rem 1.3rem; display: grid; grid-template-columns: auto minmax(0,1fr); gap: .1rem .9rem;
+}
+.task input { margin: .35rem 0 0; width: 1.05rem; height: 1.05rem; accent-color: var(--accent); cursor: pointer; grid-row: 1 / -1; }
+.task .tier { font-family: "IBM Plex Mono", monospace; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-mute); }
+.task .tier .est { color: var(--accent); }
+.task .cmd { color: var(--ev-ink); white-space: pre; margin-top: .1rem; }
+.task .cmd .k { color: var(--ev-hi); }
+.task .cmd .c { color: var(--ev-cmt); font-style: italic; }
+.shape-label {
+  font-family: "IBM Plex Mono", monospace; font-size: .7rem;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-mute); margin: 0 0 .3rem;
+}
+.stretch-head {
+  font-family: "IBM Plex Mono", monospace; font-size: .74rem;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-mute); margin: 2.2rem 0 1rem; font-weight: 400;
+}
+.gotchas { background: var(--surface-alt); border: 1px solid var(--rule); border-radius: 4px; padding: 1.4rem 1.5rem; margin-top: 1.6rem; }
+.gotchas h3 {
+  font-family: "IBM Plex Mono", monospace; font-size: .74rem;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-mute); margin: 0 0 1rem; font-weight: 400;
+}
+.gotchas ul { margin: 0; padding: 0; list-style: none; display: grid; gap: .9rem; }
+.gotchas li { font-size: .93rem; color: var(--ink-soft); max-width: var(--measure); }
+.gotchas strong { color: var(--ink); font-weight: 500; }
+.task h3 { font-size: var(--step-1); font-weight: 600; margin: .1rem 0 .3rem; letter-spacing: -.01em; }
+.task h3 label { cursor: pointer; }
+.task p { margin: 0 0 .5rem; color: var(--ink-soft); font-size: .95rem; max-width: var(--measure); }
+.task .hint { font-size: .9rem; color: var(--ink-mute); border-left: 2px solid var(--rule-strong); padding-left: .8rem; margin: 0; }
+.task.done h3 { text-decoration: line-through; color: var(--ink-mute); }
+
+.evidence { background: var(--ev-ground); border-radius: 4px; overflow: hidden; margin-top: 2rem; }
+.evidence-label {
+  font-family: "IBM Plex Mono", monospace; font-size: .74rem;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--ev-cmt);
+  padding: 1rem 1.5rem .3rem; margin: 0;
+}
+.evidence pre {
+  font-family: "IBM Plex Mono", monospace; font-size: .84rem; line-height: 1.75;
+  color: var(--ev-ink); margin: 0; padding: .4rem 1.5rem 1.4rem; overflow-x: auto;
+}
+.evidence .hi { color: var(--ev-hi); font-weight: 500; }
+.evidence .cmt { color: var(--ev-cmt); font-style: italic; }
+.evidence .warm { color: var(--ev-warm); }
+
+.concepts { display: grid; gap: 1.5rem; }
+@media (min-width: 44rem) { .concepts { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+.concept { background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 1.3rem 1.4rem; }
+.concept h3 { font-size: .95rem; font-weight: 600; margin: 0 0 .5rem; font-family: "IBM Plex Mono", monospace; letter-spacing: -.01em; color: var(--accent); }
+.concept p { margin: 0; font-size: .93rem; color: var(--ink-soft); }
+
+.resgroup { margin-bottom: 2.2rem; }
+.resgroup:last-child { margin-bottom: 0; }
+.resgroup > h3 {
+  font-family: "IBM Plex Mono", monospace; font-size: .74rem;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-mute); margin: 0 0 1rem; font-weight: 400;
+}
+.res { list-style: none; margin: 0; padding: 0; display: grid; gap: .9rem; }
+@media (min-width: 52rem) { .res { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+.res li { background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 1.1rem 1.25rem; }
+.res .name { font-family: "IBM Plex Sans", sans-serif; font-weight: 600; font-size: .98rem; }
+.res .meta { display: block; font-family: "IBM Plex Mono", monospace; font-size: .73rem; color: var(--ink-mute); margin-top: .2rem; }
+.res p { margin: .55rem 0 0; font-size: .93rem; color: var(--ink-soft); }
+.res strong { color: var(--ink); font-weight: 500; }
+
+.rules { counter-reset: r; list-style: none; margin: 0; padding: 0; display: grid; gap: 1.1rem; }
+.rules li { counter-increment: r; display: grid; grid-template-columns: 2rem minmax(0,1fr); gap: .8rem; max-width: var(--measure); }
+.rules li::before {
+  content: counter(r, decimal-leading-zero);
+  font-family: "IBM Plex Mono", monospace; font-size: .85rem; color: var(--accent); padding-top: .15rem;
+}
+.rules strong { font-weight: 500; color: var(--ink); }
+.rules span { color: var(--ink-soft); }
+
+.getit { background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; box-shadow: var(--shadow); overflow: hidden; }
+.getit-head { padding: 1.6rem 1.5rem; border-bottom: 1px solid var(--rule); background: var(--surface-alt); }
+@media (min-width: 48rem) { .getit-head { padding: 1.8rem 2rem; } }
+.getit-head h3 { font-size: var(--step-2); font-weight: 600; margin: 0 0 .4rem; letter-spacing: -.015em; }
+.getit-head p { margin: 0 0 1.1rem; color: var(--ink-soft); font-size: .95rem; max-width: var(--measure); }
+.btn {
+  display: inline-flex; align-items: center; gap: .6rem;
+  font-family: "IBM Plex Sans", sans-serif; font-size: .95rem; font-weight: 500;
+  background: var(--accent); color: var(--btn-ink); text-decoration: none;
+  padding: .7rem 1.25rem; border-radius: 3px; border: 1px solid var(--accent);
+}
+.btn:hover { background: var(--accent-deep); border-color: var(--accent-deep); }
+.btn::before { content: "\2193"; font-family: "IBM Plex Mono", monospace; }
+.getit-head .meta {
+  font-family: "IBM Plex Mono", monospace; font-size: .76rem;
+  color: var(--ink-mute); margin: .9rem 0 0;
+}
+
+.steps { counter-reset: s; list-style: none; margin: 0; padding: 1.6rem 1.5rem; display: grid; gap: 1.5rem; }
+@media (min-width: 48rem) { .steps { padding: 2rem; } }
+.steps > li { counter-increment: s; display: grid; grid-template-columns: 1.9rem minmax(0,1fr); gap: .75rem; }
+.steps > li::before {
+  content: counter(s); font-family: "IBM Plex Mono", monospace; font-size: .8rem;
+  color: var(--accent); background: var(--accent-soft);
+  width: 1.6rem; height: 1.6rem; border-radius: 50%;
+  display: grid; place-items: center; margin-top: .1rem;
+}
+.steps h4 { font-size: 1rem; font-weight: 600; margin: .15rem 0 .35rem; letter-spacing: -.01em; }
+.steps p { margin: 0 0 .6rem; font-size: .94rem; color: var(--ink-soft); max-width: var(--measure); }
+.steps p:last-child { margin-bottom: 0; }
+.steps strong { color: var(--ink); font-weight: 500; }
+.cmd {
+  display: block; background: var(--ev-ground); color: var(--ev-hi);
+  font-family: "IBM Plex Mono", monospace; font-size: .86rem;
+  padding: .65rem .9rem; border-radius: 3px; margin: 0 0 .6rem;
+  overflow-x: auto; white-space: pre;
+}
+
+.snag { border-top: 1px solid var(--rule); padding: 1.5rem; background: var(--surface-alt); }
+@media (min-width: 48rem) { .snag { padding: 1.8rem 2rem; } }
+.snag h4 {
+  font-family: "IBM Plex Mono", monospace; font-size: .74rem;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--ink-mute); margin: 0 0 1.1rem;
+}
+.snag dl { margin: 0; display: grid; gap: 1rem; }
+.snag dt { font-family: "IBM Plex Mono", monospace; font-size: .86rem; color: var(--crit); margin-bottom: .2rem; }
+.snag dd { margin: 0; font-size: .93rem; color: var(--ink-soft); max-width: var(--measure); }
+
+footer { border-top: 1px solid var(--rule); background: var(--surface); margin-top: 1rem; }
+.footer-inner { display: flex; flex-wrap: wrap; gap: 1rem 2rem; justify-content: space-between; align-items: baseline; padding-block: 1.6rem; }
+.footer-inner p { margin: 0; font-size: .88rem; color: var(--ink-mute); }
+.footer-links { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+.footer-links a { font-family: "IBM Plex Mono", monospace; font-size: .82rem; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+
+<header class="masthead">
+  <div class="wrap masthead-inner">
+    <a class="wordmark" href="#top">Nightshift</a>
+    <nav>
+      <a href="#start">Start here</a>
+      <a href="#missions">Missions</a>
+      <a href="#current">Mission 01</a>
+      <a href="#commit">First commit</a>
+      <a href="#concepts">Concepts</a>
+      <a href="#resources">Resources</a>
+      <a href="#rules">Rules</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <p class="eyebrow">Two-person lab &middot; est. October 2026</p>
+    <h1>Security isn't about breaking in. It's about knowing what holds.</h1>
+    <p class="lede">
+      Six missions, one at a time. <strong>You're on the keyboard.</strong> I untangle it
+      when it knots. Nobody here watches videos and calls that learning.
+    </p>
+    <p class="body">
+      Every mission is a short program that tells you something true and uncomfortable
+      about systems you already use daily. Six missions in, you won't have a certificate
+      &mdash; you'll have a public folder of working code with your name on it, which is
+      the thing people in this field actually get hired on.
+    </p>
+    <p class="body">
+      <strong>Assumed knowledge: none.</strong> Not Python, not the command line, not
+      GitHub. If you've never written a line of code, you're exactly who this is built for
+      &mdash; <a href="#start">Start here</a> explains the vocabulary, and
+      <a href="#resources">Resources</a> says where to learn each piece properly.
+    </p>
+  </div>
+
+  <section id="start">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Start here</h2>
+        <p>Four words show up constantly below. If any of them are fuzzy right now, that's the normal starting position &mdash; nobody is born knowing them. Here they are in plain language, and <a href="#resources">Resources</a> says where to go deeper on each.</p>
+      </div>
+      <div class="concepts">
+        <div class="concept">
+          <h3>the terminal</h3>
+          <p>A text-only way to tell your computer what to do. Instead of double-clicking an icon, you type the name of what you want and press Enter. On Windows it's called <strong>PowerShell</strong> or <strong>Terminal</strong> &mdash; press <kbd>Win</kbd>+<kbd>X</kbd> and it's in the menu. It looks hostile and it's really just a conversation: you type a line, it answers. Everything in this lab happens here.</p>
+        </div>
+        <div class="concept">
+          <h3>python</h3>
+          <p>A programming language &mdash; a vocabulary and set of rules for writing instructions a computer will follow. It was designed to be readable by humans, which is why most security tooling you'll meet is written in it. You install it once, and from then on your machine understands files ending in <code>.py</code>.</p>
+        </div>
+        <div class="concept">
+          <h3>a script</h3>
+          <p>A plain text file full of those instructions, run from top to bottom. That's the whole idea. <code>pwned.py</code> is a script &mdash; you can open it in Notepad and read every line. Nothing is compiled, hidden or sealed. <strong>If you can read it, you can change it</strong>, and changing it is how this lab works.</p>
+        </div>
+        <div class="concept">
+          <h3>git and github</h3>
+          <p><strong>Git</strong> is a tool on your computer that records every change you make to your code, like an infinite undo history with notes. <strong>GitHub</strong> is the website that stores those histories online. People use the two words interchangeably, which is confusing &mdash; that's the actual difference. It matters because GitHub is the closest thing this field has to a r&eacute;sum&eacute;.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="missions">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Missions</h2>
+        <p>Every mission says three things: what you <strong>build</strong>, what you
+        <strong>learn</strong>, and the <strong>payoff</strong> &mdash; the moment the point lands.
+        A locked mission opens when the one before it is pushed. The small line at the
+        bottom of each is the jargon you'll walk away knowing &mdash; <strong>you're not
+        meant to recognise any of it yet</strong>.</p>
+      </div>
+      <div class="missions">
+        <article class="mission">
+          <div class="mission-no">01</div>
+          <div>
+            <h3>Pwned?</h3>
+            <dl class="brief">
+              <div><dt>Build</dt><dd>Your first repository on GitHub &mdash; holding the tool and your written answers to the six exercises. <strong>No code to write yet</strong>; that starts in mission 02.</dd></div>
+              <div><dt>Learn</dt><dd>What a hash really is and why nobody can reverse one, why stolen password databases still get cracked anyway, and what <strong>entropy</strong> actually measures &mdash; which is not what most people think.</dd></div>
+              <div><dt>Payoff</dt><dd>You type a password you use today. The number isn't zero. Then you work out precisely why, and what would have had to be different.</dd></div>
+            </dl>
+            <p class="teaches">hashing &middot; entropy &middot; salting &middot; k-anonymity</p>
+          </div>
+          <span class="status live">Active</span>
+        </article>
+        <article class="mission">
+          <div class="mission-no">02</div>
+          <div>
+            <h3>Ten Thousand Bad Passwords</h3>
+            <dl class="brief">
+              <div><dt>Build</dt><dd>A script that reads a wordlist file of the most-used passwords in the US, runs all of them through mission 01, and draws a bar chart of the results.</dd></div>
+              <div><dt>Learn</dt><dd>Reading files, looping over thousands of items without writing thousands of lines, and turning a wall of output into <strong>one picture that argues a point</strong>.</dd></div>
+              <div><dt>Payoff</dt><dd>The chart shows you how people actually pick passwords. It is not a wide, random spread &mdash; and that is precisely what makes cracking work.</dd></div>
+            </dl>
+            <p class="teaches">file I/O &middot; loops &middot; matplotlib</p>
+          </div>
+          <span class="status locked">Locked</span>
+        </article>
+        <article class="mission">
+          <div class="mission-no">03</div>
+          <div>
+            <h3>What's Listening at Home</h3>
+            <dl class="brief">
+              <div><dt>Build</dt><dd>A port scanner: it walks every address on your home Wi-Fi, knocks on the common doors, and prints a list of which devices answered and on what.</dd></div>
+              <div><dt>Learn</dt><dd>What a port actually <em>is</em>, how two machines agree to talk, and why "it's behind my router" is <strong>not</strong> the same as "nobody can reach it".</dd></div>
+              <div><dt>Payoff</dt><dd>Your own house, mapped by you. Printers, TVs, cameras, consoles &mdash; things quietly accepting connections that you never set up on purpose.</dd></div>
+            </dl>
+            <p class="teaches">sockets &middot; TCP &middot; network ranges</p>
+          </div>
+          <span class="status locked">Locked</span>
+        </article>
+        <article class="mission">
+          <div class="mission-no">04</div>
+          <div>
+            <h3>Reading a Phishing Email</h3>
+            <dl class="brief">
+              <div><dt>Build</dt><dd>A script that swallows a raw email file and prints a verdict: who really sent it, whether the sending server was authorised, and where the visible name disagrees with the real address.</dd></div>
+              <div><dt>Learn</dt><dd>That every email carries a paper trail above the part you read, and that the "From" line is <strong>decoration, not evidence</strong>. Plus how SPF and DKIM try to fix that.</dd></div>
+              <div><dt>Payoff</dt><dd>Pull a real phishing message out of your own spam folder and prove, mechanically, that it's a fake. No instinct, no guessing &mdash; proof.</dd></div>
+            </dl>
+            <p class="teaches">SMTP headers &middot; SPF/DKIM &middot; social engineering</p>
+          </div>
+          <span class="status locked">Locked</span>
+        </article>
+        <article class="mission">
+          <div class="mission-no">05</div>
+          <div>
+            <h3>Build the Vault</h3>
+            <dl class="brief">
+              <div><dt>Build</dt><dd>A small password manager. One master password unlocks a file that holds all the others, and that file is unreadable to anyone who opens it without the key.</dd></div>
+              <div><dt>Learn</dt><dd>Encryption you can reverse (unlike mission 01's hashing, which you can't), why your master password is never used as the key directly, and what a salt is for.</dd></div>
+              <div><dt>Payoff</dt><dd>Then you attack your own vault. You find out what a weak master password costs in <strong>minutes, measured</strong> &mdash; and the lesson is no longer theoretical.</dd></div>
+            </dl>
+            <p class="teaches">AES &middot; key derivation &middot; threat modeling</p>
+          </div>
+          <span class="status locked">Locked</span>
+        </article>
+        <article class="mission">
+          <div class="mission-no">06</div>
+          <div>
+            <h3>Bandit, Levels 0&ndash;15</h3>
+            <dl class="brief">
+              <div><dt>Build</dt><dd>Nothing. This one is the gym. Sixteen locked levels on a remote server: each level hides a password that opens the next, and you have only a terminal to find it with.</dd></div>
+              <div><dt>Learn</dt><dd>The Linux command line for real &mdash; moving around, searching inside thousands of files, chaining commands, reading permissions. <strong>Every job in this field assumes you have this.</strong></dd></div>
+              <div><dt>Payoff</dt><dd>The black window stops being intimidating and becomes the fastest tool you own. That shift is the actual entry ticket to the profession.</dd></div>
+            </dl>
+            <p class="teaches">Linux shell &middot; SSH &middot; persistence</p>
+          </div>
+          <span class="status locked">Locked</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="current">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Mission 01 &mdash; Pwned?</h2>
+        <p>Get the tool running first &mdash; that part takes about ten minutes. Everything after it is <strong>thinking, not typing</strong>. The program is the instrument; the six exercises are the actual mission, and five of the six are answered in words.</p>
+      </div>
+
+      <div class="getit">
+        <div class="getit-head">
+          <h3>Get the tool</h3>
+          <p>One file. No installer, no libraries to add, nothing to sign up for. Seventy-one lines you can read start to finish in about two minutes.</p>
+          <a class="btn" href="pwned.py" download>Download pwned.py</a>
+          <p class="meta">71 lines &middot; 2.5 KB &middot; Python 3.8 or newer</p>
+        </div>
+
+        <ol class="steps">
+          <li>
+            <div>
+              <h4>Install Python</h4>
+              <p>Get it from <a href="https://www.python.org/downloads/">python.org/downloads</a> and run the installer.</p>
+              <p><strong>On the very first screen, tick the box that says "Add python.exe to PATH"</strong> before you click Install. It sits at the bottom and it's easy to miss. That single checkbox is the difference between step 5 working and step 5 throwing an error.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h4>Check that it worked</h4>
+              <p>Press <strong>Win + X</strong> and pick <strong>Terminal</strong>. Type this and press Enter:</p>
+              <code class="cmd">python --version</code>
+              <p>You want a version number back, like <code>Python 3.12.4</code>. Anything else, see Snags below.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h4>Download it, then read it</h4>
+              <p>Use the button above. It lands in your <strong>Downloads</strong> folder.</p>
+              <p>Now open it in Notepad and actually read it first. <strong>Rule zero of this field: you don't run code you haven't looked at.</strong> It's seventy-one lines and most of them are comments explaining the next four steps of what it does. Start the habit on a file you already trust.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h4>Point the terminal at that folder</h4>
+              <p>Back in the Terminal window:</p>
+              <code class="cmd">cd ~\Downloads</code>
+              <p>The prompt changes to show you're now in that folder. The terminal only ever acts on where it currently is &mdash; that's most of what "navigating" means here.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h4>Run it</h4>
+              <code class="cmd">python pwned.py</code>
+              <p>It asks for a password. <strong>Nothing will appear as you type &mdash; no dots, no stars, nothing.</strong> That's deliberate, not a frozen keyboard. Type it and press Enter.</p>
+              <p>Start with a password you'd have called strong five minutes ago.</p>
+            </div>
+          </li>
+        </ol>
+
+        <div class="snag">
+          <h4>Snags</h4>
+          <dl>
+            <div>
+              <dt>'python' is not recognized as an internal or external command</dt>
+              <dd>The PATH box in step 1 wasn't ticked. Run the installer again, choose <strong>Modify</strong>, and make sure "Add python.exe to PATH" is on. Then close the Terminal and open a new one &mdash; it only reads PATH when it starts.</dd>
+            </div>
+            <div>
+              <dt>The Microsoft Store opens instead of Python</dt>
+              <dd>Windows ships a placeholder that hijacks the word <code>python</code>. Go to Settings &rarr; Apps &rarr; Advanced app settings &rarr; <strong>App execution aliases</strong>, and switch off both <code>python.exe</code> and <code>python3.exe</code>.</dd>
+            </div>
+            <div>
+              <dt>can't open file 'pwned.py': No such file or directory</dt>
+              <dd>The terminal isn't in the folder holding the file. Redo step 4. If you saved it somewhere other than Downloads, <code>cd</code> to that folder instead.</dd>
+            </div>
+            <div>
+              <dt>URLError or a connection error</dt>
+              <dd>The lookup needs the internet &mdash; it's asking a public breach database for a batch of hashes. Your password still isn't going anywhere; see the code if you want to confirm that yourself.</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+
+      <ul class="tasks" id="tasks">
+        <li class="task">
+          <input type="checkbox" id="t1">
+          <span class="tier">Exercise 1 &middot; <span class="est">5 minutes</span></span>
+          <h3><label for="t1">Watch one letter destroy everything</label></h3>
+          <p>Run the tool and give it <code>password</code>. It prints a line starting <code>SHA-1 hash :</code> &mdash; write those 40 characters down. Run it again with <code>Password</code>. One letter, now capitalised. Write the new hash underneath the old one.</p>
+          <p>Compare them character by character. <strong>How much of it stayed the same?</strong></p>
+          <p class="hint">This is the <strong>avalanche effect</strong>, and it's deliberate. A good hash has no concept of "nearly right" &mdash; one flipped bit on the way in scrambles roughly half the bits coming out. That's what kills guessing-by-approach: there's no warmer-or-colder to follow, so every wrong guess tells you exactly nothing.</p>
+        </li>
+
+        <li class="task">
+          <input type="checkbox" id="t2">
+          <span class="tier">Exercise 2 &middot; <span class="est">5 minutes</span></span>
+          <h3><label for="t2">Try to go backwards</label></h3>
+          <p>Take one of those 40-character hashes. Your job is to get the password back out of it. You won't manage it &mdash; spend three minutes on <em>why</em> not, then write the reason in your own words.</p>
+          <p>Here's the clue that cracks it open: that hash is <strong>exactly 40 characters</strong> whether you fed it a 3-letter password or the complete text of a novel. So where did the rest of the novel go?</p>
+          <p class="hint">It was thrown away. A hash isn't encryption &mdash; encryption keeps everything, locked, so the right key opens it again. A hash destroys. You can blend a fruit into a smoothie and you cannot un-blend it, no matter how good your blender. That property has a name: <strong>one-way</strong>, or preimage resistance.</p>
+        </li>
+
+        <li class="task">
+          <input type="checkbox" id="t3">
+          <span class="tier">Exercise 3 &middot; <span class="est">10 minutes</span></span>
+          <h3><label for="t3">Then why do breaches work at all?</label></h3>
+          <p>Hold exercises 1 and 2 side by side and you have a contradiction to solve. Nobody can reverse a hash. Yet the database this tool talks to knows, with certainty, that a particular hash means <code>password123</code> and that 2,266,543 people used it.</p>
+          <p><strong>How?</strong> Write your answer before reading the next paragraph.</p>
+          <p class="hint">Nobody reversed anything. The same input always produces the same output &mdash; that's the whole point of a hash &mdash; so an attacker hashes every candidate password <em>forwards</em>, once, and keeps the results in a giant lookup table. Then cracking a stolen database is just looking things up. The property that makes hashing useful is the same property that makes it attackable. The fix is called a <strong>salt</strong>: a random value mixed into each user's password before hashing, so two people who both picked <code>password123</code> get two different hashes and the attacker's prebuilt table is worth nothing.</p>
+        </li>
+
+        <li class="task">
+          <input type="checkbox" id="t4">
+          <span class="tier">Exercise 4 &middot; <span class="est">15 minutes</span> &middot; the big one</span>
+          <h3><label for="t4">Entropy is not what it looks like</label></h3>
+          <p>Run the tool on these three and write down what comes back: <code>P@ssw0rd</code>, then <code>mycathatesmondays</code>, then something you invent on the spot.</p>
+          <p><code>P@ssw0rd</code> has a capital, a symbol, a digit and a substitution. It looks like it was built to a password policy. It's been breached over six million times. The seventeen lowercase letters have never been seen. <strong>Why?</strong></p>
+          <p class="hint">Entropy is not how strange a password looks to a human. It's <strong>the size of the pile an attacker has to search through, given what they already know about how people choose</strong>. Nobody attacking <code>P@ssw0rd</code> treats it as eight unknown characters &mdash; they treat it as one common word with the four obvious substitutions, which is a list of a few million. Being "complex" to look at bought nothing, because the attacker never guessed character by character in the first place.</p>
+        </li>
+
+        <li class="task">
+          <input type="checkbox" id="t5">
+          <span class="tier">Exercise 5 &middot; <span class="est">15 minutes</span></span>
+          <h3><label for="t5">The lever you don't control</label></h3>
+          <p>Read the table below. Each row is a way of choosing a password; the last two columns are how long one high-end graphics card would need to grind through every possibility, depending on <em>how the website stored it</em>.</p>
+          <p>Two things to answer: <strong>which row surprised you</strong>, and <strong>which of those two columns can you personally do anything about?</strong></p>
+          <p class="hint">You pick the row. The website picks the column. SHA-1 is fast on purpose &mdash; that's a virtue when you're checking a downloaded file hasn't been tampered with, and a disaster when you're storing passwords, because fast means cheap to guess. bcrypt and argon2 are built to be deliberately, tunably slow. Same password, same attacker: hours or millennia, decided entirely by someone you've never met. That asymmetry is why unique passwords per site matter more than clever ones.</p>
+        </li>
+
+        <li class="task">
+          <input type="checkbox" id="t6">
+          <span class="tier">Exercise 6 &middot; <span class="est">no right answer</span></span>
+          <h3><label for="t6">Is the tool lying to you?</label></h3>
+          <p>The tool sends the first five characters of your hash to a stranger's server and swears your password never leaves the room. Interrogate that claim.</p>
+          <p>Could the server work out your password from those five characters? What if it quietly logged every lookup you made for a year &mdash; does the picture change? What if you were the only person on earth using this tool?</p>
+          <p class="hint">There is no clean answer, and that's the point. Everything in security is a trade made against a specific opponent with specific resources. Being able to argue this one carefully &mdash; "safe against whom, doing what, for how long" &mdash; is closer to the actual job than any tool you'll ever learn.</p>
+        </li>
+      </ul>
+
+      <div class="evidence">
+        <p class="evidence-label">How long one GPU needs &middot; figures computed, not quoted</p>
+<pre>                                      bits    stored with SHA-1   stored with bcrypt
+<span class="warm">P@ssw0rd</span>            sits in every wordlist     23    <span class="warm">0.0002 seconds</span>         56 minutes
+8 random characters      95 ^ 8        53    37 hours            70,000 years
+4 random words           7776 ^ 4      52    20 hours            39,000 years
+5 random words           7776 ^ 5      65    18 years            300,000,000 years
+6 random words           7776 ^ 6      78    <span class="hi">140,000 years</span>       <span class="hi">2 trillion years</span>
+
+<span class="cmt"># "random words" means picked by dice from a 7,776-word list - not chosen by you.</span>
+<span class="cmt"># note row 3 against row 2: four words is not stronger than eight random</span>
+<span class="cmt"># characters. It is the same, and you can actually remember six of them.</span></pre>
+      </div>
+
+      <p class="stretch-head">Stretch &mdash; only if he wants to touch the code tonight</p>
+      <ul class="tasks" id="stretch">
+        <li class="task">
+          <input type="checkbox" id="s1">
+          <span class="tier">Stretch &middot; <span class="est">10 minutes</span></span>
+          <h3><label for="s1">Make it react</label></h3>
+          <p>Open <code>pwned.py</code> in Notepad and make it print one extra warning line when a password has been breached more than 100,000 times &mdash; and nothing extra when it hasn't.</p>
+          <p class="shape-label">The shape</p>
+<code class="cmd"><span class="k">if</span> count &gt; 100000:
+    <span class="k">print</span>("this one's at the top of attack lists")</code>
+          <p>Read it aloud as a sentence: <strong>if</strong> that's true, <strong>then</strong> do the indented bit. The <code>:</code> closes the question; the four spaces say "this belongs to the if".</p>
+          <p class="hint">The number is already in a variable called <code>times</code>. Three traps: write <code>100000</code> with no comma, keep your indentation lined up with the code around it, and <strong>save the file before you run it</strong> &mdash; the terminal reads from disk, so an unsaved Notepad window has changed nothing.</p>
+        </li>
+      </ul>
+
+
+      <div class="evidence">
+        <p class="evidence-label">Measured, not estimated &middot; 21 Oct 2026</p>
+<pre>password123            breached  <span class="warm">2,266,543</span> times
+P@ssw0rd               breached  <span class="warm">6,421,042</span> times   <span class="cmt">the "clever" one</span>
+mycathatesmondays      breached          <span class="hi">0</span> times   <span class="cmt">17 chars, no symbols</span>
+
+candidate hashes pulled per lookup     <span class="hi">~1,900</span>
+characters of your password sent       <span class="hi">0</span>
+<span class="cmt"># careful: 0 means nobody has used it yet, NOT that it is strong.</span>
+<span class="cmt"># a phrase of ordinary English words is weaker than its length suggests.</span></pre>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="commit">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Finishing: your first commit</h2>
+        <p>Mission 01 ends with your answers on GitHub. You've never done this before, so here is all of it &mdash; what the words mean, the exact commands, and every error you're likely to hit. Budget half an hour the first time and about forty seconds every time after.</p>
+      </div>
+
+      <div class="concepts">
+        <div class="concept">
+          <h3>repository</h3>
+          <p>A folder that git is watching, plus the complete history of everything that has ever been in it. When you run <code>git init</code>, a hidden <code>.git</code> folder appears inside &mdash; <strong>that folder is the repository</strong>. Delete it and you have an ordinary folder again with no history.</p>
+        </div>
+        <div class="concept">
+          <h3>commit</h3>
+          <p>A snapshot of your files at one moment, sealed and labelled with a message you write. <strong>A commit does not upload anything.</strong> That is the single most common misunderstanding about git, and it trips up nearly everyone: committing is local, sending is a separate act.</p>
+        </div>
+        <div class="concept">
+          <h3>staging</h3>
+          <p>The step between editing and committing, where you choose <em>which</em> changes belong in the next snapshot. <code>git add</code> puts things in the box; <code>git commit</code> seals and labels it. It feels like a pointless extra step until the first time you want to save half of what you changed.</p>
+        </div>
+        <div class="concept">
+          <h3>push</h3>
+          <p>Sending your sealed commits to GitHub. Until you push, everything you've done lives only on your laptop &mdash; which also means a laptop failure takes it all with it. <code>origin</code> is just git's default nickname for "the copy on GitHub".</p>
+        </div>
+      </div>
+
+      <div class="evidence">
+        <p class="evidence-label">Where a file actually is, at each stage</p>
+<pre>  <span class="hi">1 YOUR FOLDER</span>          <span class="hi">2 STAGING</span>           <span class="hi">3 COMMIT</span>            <span class="hi">4 GITHUB</span>
+  what Explorer shows    what you picked     sealed + labelled   the online copy
+                         for the next box    kept in .git        other people see
+
+  answers.md   <span class="warm">--git add--&gt;</span>   answers.md   <span class="warm">--git commit--&gt;</span>   snapshot   <span class="warm">--git push--&gt;</span>   snapshot
+  pwned.py                   pwned.py                            + message                   + message
+
+  <span class="cmt">|---------------- all of this is still on your laptop ----------------|  |-- now public --|</span></pre>
+      </div>
+
+      <ol class="steps">
+        <li>
+          <div>
+            <h4>Install Git</h4>
+            <p>Download it from <a href="https://git-scm.com/download/win">git-scm.com/download/win</a>. The installer asks a lot of questions &mdash; <strong>accept every default</strong>. One of those defaults installs Git Credential Manager, which is what handles your GitHub login later without you ever creating a token by hand.</p>
+            <p>Close your Terminal, open a fresh one, and check:</p>
+            <code class="cmd">git --version</code>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h4>Tell Git who you are &mdash; once, ever</h4>
+            <p>Every commit is signed with a name and an email. Git refuses to make one until it knows yours.</p>
+            <code class="cmd">git config --global user.name "Your Name"
+git config --global user.email "you@example.com"</code>
+            <p><strong>Use the same email address as your GitHub account</strong>, or your commits won't be linked to your profile and the work won't show up as yours. <code>--global</code> means "every project on this machine", so you do this one time and never again.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h4>Put the work in one folder</h4>
+            <p>Make a folder called <code>cyber-lab</code> and put two files in it: <code>pwned.py</code>, and <code>answers.md</code> with your written answers to the six exercises. That folder is what's about to become public, so look at what's in it before you continue.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h4>Create the empty repository on GitHub</h4>
+            <p>On <a href="https://github.com/new">github.com/new</a>: name it <code>cyber-lab</code>, leave it <strong>Public</strong>, and <strong>do not tick "Add a README file"</strong>. An empty repository makes the first push far simpler &mdash; ticking that box is the cause of the most confusing error in the Snags list below.</p>
+            <p>Click Create, then copy the URL it shows you. It looks like <code>https://github.com/your-username/cyber-lab.git</code>.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h4>Turn your folder into a repository</h4>
+            <p>Point the Terminal at the folder, then initialise it:</p>
+            <code class="cmd">cd ~\Downloads\cyber-lab
+git init -b main</code>
+            <p>A hidden <code>.git</code> folder appears. The history will live in there from now on. <code>-b main</code> names your first branch <code>main</code>, which is what GitHub expects &mdash; without it older versions of git pick <code>master</code> and the names won't match.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h4>Choose what goes in, then seal it</h4>
+            <code class="cmd">git add .
+git commit -m "Mission 01: answers on hashing and entropy"</code>
+            <p>The <code>.</code> means "everything in this folder". The <code>-m</code> is the message, and it's for a human reading it in six months &mdash; <strong>write what changed and why, never "update"</strong>.</p>
+            <p>You now have a commit. <strong>Nothing has been uploaded yet.</strong> It exists only inside that <code>.git</code> folder on your laptop.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h4>Connect it to GitHub and send it</h4>
+            <code class="cmd">git remote add origin https://github.com/your-username/cyber-lab.git
+git push -u origin main</code>
+            <p>The first line teaches your folder where its online twin lives; <code>origin</code> is just a nickname for that URL so you don't retype it. The second line sends everything.</p>
+            <p>A browser window will open asking you to sign in to GitHub. That's Git Credential Manager doing its job &mdash; it stores the login, so this is the only time you'll see it. Refresh your GitHub page and your files are there.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h4>From now on, the loop is three lines</h4>
+            <code class="cmd">git add .
+git commit -m "what I changed"
+git push</code>
+            <p>That's it. Steps 1 through 5 were setup you never repeat for this project.</p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="gotchas">
+        <h3>The one habit worth building</h3>
+        <ul>
+          <li>Run <code>git status</code> after <em>every single command above</em>. It tells you which files git has noticed, what's staged, and what's been committed but not pushed &mdash; in plain English, with suggestions. <strong>Beginners who run it constantly understand git in a week. Beginners who don't stay confused for a month.</strong> It changes nothing and cannot break anything, so there is no reason not to.</li>
+        </ul>
+      </div>
+
+      <div class="gotchas">
+        <h3>Git never forgets &mdash; and that's a security problem</h3>
+        <ul>
+          <li>If you commit a password, an API key, or a private file and then delete it in a later commit, <strong>it is still in the history</strong>. Anyone who clones the repository can read it. Deleting a file does not delete its past; that's the entire point of version control.</li>
+          <li>This is a real and common cause of breaches, not a hypothetical. Bots watch the stream of new public commits and scrape credentials out of them within <strong>minutes</strong> of being pushed. People who notice their mistake and delete the file an hour later still get compromised.</li>
+          <li>So the rule is simple and it goes before <code>git add .</code>, not after: <strong>know what is in the folder.</strong> If a secret ever does get pushed, deleting it is not the fix &mdash; you treat that credential as burned and replace it.</li>
+        </ul>
+      </div>
+
+      <div class="snag">
+        <h4>Snags</h4>
+        <dl>
+          <div>
+            <dt>'git' is not recognized as an internal or external command</dt>
+            <dd>Either Git isn't installed, or your Terminal was already open when you installed it. Close every Terminal window and open a new one &mdash; it only reads the list of available programs when it starts.</dd>
+          </div>
+          <div>
+            <dt>Author identity unknown / Please tell me who you are</dt>
+            <dd>You skipped step 2. Run those two <code>git config</code> lines and then run your <code>git commit</code> again.</dd>
+          </div>
+          <div>
+            <dt>Authentication failed, after you typed your GitHub password</dt>
+            <dd>GitHub stopped accepting account passwords for git in 2021. Let the browser window handle the login instead. If no window appears, go to GitHub &rarr; Settings &rarr; Developer settings &rarr; <strong>Personal access tokens</strong>, generate one with <code>repo</code> access, and paste that in place of the password.</dd>
+          </div>
+          <div>
+            <dt>src refspec main does not match any</dt>
+            <dd>You're pushing something that doesn't exist yet. Either nothing has been committed (redo step 6), or your branch is called <code>master</code> rather than <code>main</code>. Fix the name with <code>git branch -M main</code> and push again.</dd>
+          </div>
+          <div>
+            <dt>Updates were rejected because the remote contains work that you do not have locally</dt>
+            <dd>You ticked "Add a README file" when creating the repository, so GitHub has a commit your laptop has never seen. Run <code>git pull --rebase origin main</code>, then push again.</dd>
+          </div>
+          <div>
+            <dt>remote origin already exists</dt>
+            <dd>The first line of step 7 ran twice. Replace the address instead of adding it: <code>git remote set-url origin &lt;your url&gt;</code>.</dd>
+          </div>
+          <div>
+            <dt>It pushed, but GitHub says the commits aren't mine</dt>
+            <dd>The email in step 2 doesn't match one on your GitHub account. Fix it with the same <code>git config</code> command, or add that address under GitHub &rarr; Settings &rarr; Emails. Commits already made keep the old address.</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section id="concepts">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Concepts</h2>
+        <p>Added as they come up. If a word here doesn't mean anything to you yet, that's the next conversation.</p>
+      </div>
+      <div class="concepts">
+        <div class="concept">
+          <h3>hash</h3>
+          <p>A one-way blender. Any input &mdash; a word or a whole book &mdash; comes out as a fixed-length code. Information is destroyed on the way through, which is why nobody reverses it. Change one character of the input and roughly half the output bits flip: the <strong>avalanche effect</strong>, which is what makes guessing-by-getting-warmer impossible.</p>
+        </div>
+        <div class="concept">
+          <h3>entropy</h3>
+          <p>The size of the pile an attacker must search, <strong>given what they know about how you chose</strong>. Not how odd the password looks. <code>P@ssw0rd</code> is not eight unknown characters; it's one dictionary word with predictable substitutions, so the real pile is a few million and it falls instantly.</p>
+        </div>
+        <div class="concept">
+          <h3>salt</h3>
+          <p>A random value mixed into each password before hashing, stored alongside it. Two people who both chose <code>password123</code> then end up with completely different hashes. It doesn't make your password better &mdash; it makes the attacker's prebuilt lookup table useless, forcing them to attack every account separately.</p>
+        </div>
+        <div class="concept">
+          <h3>key stretching</h3>
+          <p>Choosing a hash that is <em>deliberately slow</em>. SHA-1 is fast, which is a virtue for checking a downloaded file and a catastrophe for storing passwords. bcrypt and argon2 are tunably slow, turning hours of attacker time into millennia. The site picks this, not you &mdash; which is the argument for a different password everywhere.</p>
+        </div>
+        <div class="concept">
+          <h3>k-anonymity</h3>
+          <p>Hiding a question inside a crowd of questions. The tool asks for all ~1,900 records sharing the first five characters of your hash, so the server learns that you asked something but never what. Privacy built into the <strong>shape of the request</strong> rather than promised in a policy you can't verify.</p>
+        </div>
+        <div class="concept">
+          <h3>threat model</h3>
+          <p>Naming who you're defending against before defending anything. "Secure" isn't a property a system has; it's a sentence that needs finishing &mdash; secure <em>against whom</em>, <em>doing what</em>, <em>for how long</em>. Exercise 6 is a threat model with the training wheels on.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="resources">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Where to learn this</h2>
+        <p>You are not expected to arrive knowing any of it. Everything below is free unless the note says otherwise, and nothing here needs a credit card to start. Pick one, don't try to read them all.</p>
+      </div>
+
+      <div class="resgroup">
+        <h3>If you've never written code before</h3>
+        <ul class="res">
+          <li>
+            <a class="name" href="https://www.py4e.com/">Python for Everybody</a>
+            <span class="meta">free &middot; video course + exercises &middot; py4e.com</span>
+            <p>A full university course, rebuilt for people who have never programmed. Start at chapter 1 and go in order. <strong>This is the single best starting point if you want one answer.</strong></p>
+          </li>
+          <li>
+            <a class="name" href="https://automatetheboringstuff.com/">Automate the Boring Stuff with Python</a>
+            <span class="meta">free to read online &middot; book &middot; automatetheboringstuff.com</span>
+            <p>Teaches Python by making it do small, genuinely useful chores instead of explaining theory first. Better if you learn by reading than by watching.</p>
+          </li>
+        </ul>
+      </div>
+
+      <div class="resgroup">
+        <h3>The terminal</h3>
+        <ul class="res">
+          <li>
+            <a class="name" href="https://learn.microsoft.com/powershell/">Microsoft's PowerShell documentation</a>
+            <span class="meta">free &middot; official reference &middot; learn.microsoft.com</span>
+            <p>Dry, but it's the source of truth for the terminal that ships with your Windows machine. Use it to look things up, not to read front to back.</p>
+          </li>
+          <li>
+            <a class="name" href="https://overthewire.org/wargames/bandit/">OverTheWire: Bandit</a>
+            <span class="meta">free &middot; game &middot; overthewire.org</span>
+            <p>Learning the command line as a series of locked doors, each hiding the key to the next. <strong>This is mission 06</strong> &mdash; but nothing stops you poking at level 0 tonight.</p>
+          </li>
+        </ul>
+      </div>
+
+      <div class="resgroup">
+        <h3>Git and GitHub</h3>
+        <ul class="res">
+          <li>
+            <a class="name" href="https://docs.github.com/en/get-started">GitHub's own Get Started guides</a>
+            <span class="meta">free &middot; ~20 minutes &middot; docs.github.com</span>
+            <p>Walks you through making an account and your first repository. Do this one at the end of mission 01, not before &mdash; it makes more sense once you have a file worth saving.</p>
+          </li>
+        </ul>
+      </div>
+
+      <div class="resgroup">
+        <h3>Security itself</h3>
+        <ul class="res">
+          <li>
+            <a class="name" href="https://tryhackme.com/">TryHackMe</a>
+            <span class="meta">free tier is substantial &middot; guided labs &middot; tryhackme.com</span>
+            <p>Browser-based exercises with the environment set up for you. The <strong>Pre Security</strong> path assumes you know nothing and is a good companion to these missions.</p>
+          </li>
+          <li>
+            <a class="name" href="https://haveibeenpwned.com/">Have I Been Pwned</a>
+            <span class="meta">free &middot; not a course &middot; haveibeenpwned.com</span>
+            <p>The database mission 01 talks to. Type in your own email address. It's the fastest way to understand why any of this matters, and it takes ten seconds.</p>
+          </li>
+        </ul>
+      </div>
+
+      <div class="resgroup">
+        <h3>When you're stuck</h3>
+        <ul class="res">
+          <li>
+            <span class="name">The error message</span>
+            <span class="meta">your first move, every time</span>
+            <p>Copy the last line of the error and paste it into a search engine, word for word. Someone has hit the exact same wall and written about it. <strong>Reading errors is a skill, and it's most of the job.</strong></p>
+          </li>
+          <li>
+            <span class="name">Ask me</span>
+            <span class="meta">after ten minutes, not before</span>
+            <p>House rule 2. The ten minutes aren't a punishment &mdash; they're where the learning actually happens. After that, asking is the right move, not a failure.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="rules">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>House rules</h2>
+      </div>
+      <ol class="rules">
+        <li><div><strong>You're on the keyboard.</strong> <span>Watching someone else type is entertainment, not training. If your hands aren't moving, nothing is going in.</span></div></li>
+        <li><div><strong>Fight it for ten minutes before you ask.</strong> <span>Then ask. Short frustration teaches; long frustration makes people quit. Ten minutes is the line.</span></div></li>
+        <li><div><strong>Breaking it is data.</strong> <span>A stack trace is the program telling you exactly where it stopped understanding you. Read it top to bottom. It isn't an insult.</span></div></li>
+        <li><div><strong>Every mission ends with a commit.</strong> <span>Working code that only exists on your laptop may as well not exist. Saving it to GitHub is called a commit. If that sentence means nothing yet, <a href="#commit">First commit</a> walks through every step of doing one for the first time.</span></div></li>
+        <li><div><strong>Only ever attack what is yours.</strong> <span>Your machine, your network, your accounts, or a lab that was deliberately built to be attacked. <strong>Not</strong> the neighbour's Wi-Fi, not your school, not a company whose website looks sloppy, not "just to see whether it works". Scanning a network you don't own is not a grey area, and it doesn't become one because nothing broke and nobody noticed. In the US the line has a name &mdash; the Computer Fraud and Abuse Act &mdash; and it's federal. Every single thing in this lab is legal purely because of where it points. Change the target and you've changed what it is, instantly and entirely.</span></div></li>
+        <li><div><strong>Every genuinely good hacker I've met has stayed out of prison.</strong> <span>That isn't luck, and it isn't because the temptation never came up. The skill that keeps you free isn't a technical one &mdash; it's the judgment you apply in the two seconds before you open a door, every time, for the rest of your career. And never underestimate the people whose job is catching you: they are patient, well funded, and they do this full time. There is always someone smarter than you. They only have to be right once; you have to be careful every single time. The ones who last make that trade consciously, and they make it early.</span></div></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <p>Nightshift &middot; Jacksonville, Florida</p>
+    <div class="footer-links">
+      <a href="#start">Start here</a>
+      <a href="#missions">Missions</a>
+      <a href="#current">Mission 01</a>
+      <a href="#commit">First commit</a>
+      <a href="#concepts">Concepts</a>
+      <a href="#resources">Resources</a>
+      <a href="#rules">Rules</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Checkbox state is a per-browser convenience. It does not sync between
+// machines and it is not a record of anything.
+(function () {
+  var boxes = document.querySelectorAll('#tasks input[type="checkbox"]');
+  function paint(box) {
+    box.closest('.task').classList.toggle('done', box.checked);
+  }
+  Array.prototype.forEach.call(boxes, function (box) {
+    try {
+      box.checked = localStorage.getItem('ns-' + box.id) === '1';
+    } catch (e) {}
+    paint(box);
+    box.addEventListener('change', function () {
+      paint(box);
+      try {
+        localStorage.setItem('ns-' + box.id, box.checked ? '1' : '0');
+      } catch (e) {}
+    });
+  });
+})();
+</script>
+</html>
