@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- QUICK REMINDER: I need to call my mom -->
 <html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -379,6 +380,11 @@ footer { border-top: 1px solid var(--rule); background: var(--surface); margin-t
           <h3>you tried to crack the hash first</h3>
           <p>Good instinct, and it got you nowhere &mdash; which is the interesting part. The code holds a SHA-256 rather than the word itself, and this particular passphrase has never appeared in a single breach, so no lookup table on earth contains it. Precomputation, the trick from exercise 3, simply has nothing to work with here. By the standard of exercise 4 it is a genuinely strong secret.</p>
           <p><strong>And you still got in, in well under a minute.</strong> That's the whole lesson: the password was never the weak part. A strong secret guarding a broken design is still a broken design.</p>
+        </div>
+        <div class="concept">
+          <h3>you found the note in the source</h3>
+          <p>Someone left a reminder in the HTML and it told you the passphrase. People do this constantly &mdash; a note, a TODO, a test account, a key pasted in "temporarily" &mdash; because a comment <em>feels</em> private. It isn't. Every character of the source is handed to everyone who loads the page.</p>
+          <p><strong>This is one of the most common ways real credentials leak</strong>, and it compounds with the git lesson further down: once it's committed and pushed, it is public, and deleting it later does not remove it from the history.</p>
         </div>
         <div class="concept">
           <h3>what would have actually worked</h3>
